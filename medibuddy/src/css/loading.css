@@ -1,0 +1,35 @@
+.loading-svg{
+    animation-name:ev8ckacf-B;
+    animation-duration:2s;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+    z-index:2;
+  }
+  .loading-circle{
+    stroke-linecap:round;
+    animation-name:eirysc09-B;
+    animation-duration:1.5s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+    stroke-dasharray:1,150;
+    stroke-dashoffset:0;
+  }
+  @keyframes ev8ckacf-B{
+    100%{
+      transform:rotate(360deg);
+    }
+  }
+  @keyframes eirysc09-B{
+    0%{
+      stroke-dasharray:1,150;
+      stroke-dashoffset:0;
+    }
+    50%{
+      stroke-dasharray:90,150;
+      stroke-dashoffset:-35;
+    }
+    100%{
+      stroke-dasharray:90,150;
+      stroke-dashoffset:-124;
+    }
+  }

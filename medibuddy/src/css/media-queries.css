@@ -1,0 +1,23 @@
+@media screen and (max-width: 1100px) {
+    .diagram-view{
+        grid-template-columns: auto !important;
+    }
+}
+
+@media screen and (max-width: 560px){
+    .data-header-d-filter_page-limit{
+        flex-direction: column;
+    }
+    .data-header-add-filter_run-q_data-view{
+        flex-direction: column;
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+        gap:0px !important;
+    }
+    .left-navigation{
+        position: fixed !important;
+        background-color: white;
+        box-shadow: var(--box-shadow);
+        z-index: 1;
+    }
+}
