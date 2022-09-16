@@ -95,6 +95,7 @@ const Menu = () => {
                         {state.isWidthFull ? 'Doctor' : null}
                     </li>
                 </Link>
+                {/*Test*/}
             </ul>
         </div>
     );

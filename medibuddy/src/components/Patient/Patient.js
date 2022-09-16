@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { PATIENT } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { getDataFromServer, pascalCase } from "../Utils";
-import '../../../node_modules/bootstrap/dist/css/bootstrap.css'
+
 const Patient = () => {
     const [state, setState] = useState({
         patients: null

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header/Header';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import Body from './Body';
 
 export const AppContext = React.createContext();
