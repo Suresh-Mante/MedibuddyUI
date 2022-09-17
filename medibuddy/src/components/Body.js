@@ -6,6 +6,7 @@ import LeftNavigation from './LeftNavigation';
 import Patient from './Patient/Patient';
 import Doctor from './Doctor/Doctor';
 import Nurse from './Nurse/Nurse';
+import OPDTest from './OPDTest/OPDTest';
 
 const Body = () => {
     const appContext = useContext(AppContext);
@@ -37,6 +38,7 @@ const Body = () => {
                 <Routes>
                     <Route path='/Patient' element={<Patient />} />
                     <Route path='/Doctor' element={<Doctor/>} />
+                    <Route path='/OPDTest' element={<OPDTest/>} />
                     <Route path='/Nurse' element={<Nurse/>} />
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/Dashboard' element={<Dashboard />} />
