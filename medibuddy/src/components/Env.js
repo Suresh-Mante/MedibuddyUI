@@ -22,3 +22,5 @@ export const OPDMEDICINE_API = BASE_API + 'opdmedicine';
 export const WARD_API = BASE_API + 'ward';
 export const ROOM_API = BASE_API + 'room';
 export const OPD_PATIENT_API = BASE_API + 'opdpatient';
+export const OPDBilling_API = BASE_API + 'opdbilling';
+export const Department_API = BASE_API + 'department';

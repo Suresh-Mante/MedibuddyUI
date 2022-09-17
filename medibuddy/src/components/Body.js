@@ -13,7 +13,8 @@ import Ward from './Ward/Ward';
 import Test from './Test/Test';
 import Medicine from './Medicine/Medicine';
 import OPDMedicine from './OPDMedicine/OPDMedicine';
-
+import Department from './Department/Department';
+import OPDBilling from './OPDBilling/OPDBilling';
 
 const Body = () => {
     const appContext = useContext(AppContext);
@@ -51,9 +52,11 @@ const Body = () => {
                     <Route path='/Doctor' element={<Doctor/>} />
                     <Route path='/OPDTest' element={<OPDTest/>} />
                     <Route path='/Nurse' element={<Nurse/>} />
+                    <Route path='/Department' element={<Department />} />
                     <Route path='/Ward' element={<Ward />} />
                     <Route path='/Room' element={<Room />} />
                     <Route path='/OPDPatient' element={<OPDPatient />} />
+                    <Route path='OPDBilling' element={<OPDBilling />} />
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/Dashboard' element={<Dashboard />} />
                 </Routes>
