@@ -5,6 +5,9 @@ import Dashboard from './Dashboard/Dashboard';
 import LeftNavigation from './LeftNavigation';
 import OPDPatient from './OPDPatient/OPDPatient';
 import Patient from './Patient/Patient';
+import Doctor from './Doctor/Doctor';
+import Nurse from './Nurse/Nurse';
+import OPDTest from './OPDTest/OPDTest';
 import Room from './Room/Room';
 import Ward from './Ward/Ward';
 
@@ -37,6 +40,9 @@ const Body = () => {
             }}>
                 <Routes>
                     <Route path='/Patient' element={<Patient />} />
+                    <Route path='/Doctor' element={<Doctor/>} />
+                    <Route path='/OPDTest' element={<OPDTest/>} />
+                    <Route path='/Nurse' element={<Nurse/>} />
                     <Route path='/Ward' element={<Ward />} />
                     <Route path='/Room' element={<Room />} />
                     <Route path='/OPDPatient' element={<OPDPatient />} />
