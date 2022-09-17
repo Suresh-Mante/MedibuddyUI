@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Menu = () => {
 
     const [state, setState] = useState({
-        isWidthFull: false,
+        isWidthFull: true,
         activeTab: '/Dashboard'
     });
 
