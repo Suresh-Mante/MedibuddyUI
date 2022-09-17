@@ -40,8 +40,8 @@
 
 .left-navigation {
   overflow-y: auto;
-  min-width: 80px;
-  max-width: 80px;
+  min-width: 200px;
+  max-width: 200px;
   height: 100%;
   border-right: 1px solid var(--very-light-grey);
   background-color: var(--very-light-grey);

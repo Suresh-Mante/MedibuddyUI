@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react"
-import { PATIENT_API } from "../Env";
+import { OPD_PATIENT_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
 import {getDataFromServer} from  '../DataAccess';
 
-const Patient = () => {
+const OPDPatient = () => {
     const [state, setState] = useState({
-        patients: null
+        OPDPatients: null
     });
-    const getPatients = async () => {
-        //use PatientAPI.Get
-        const response = await getDataFromServer(PATIENT_API, 'GET');
+    const getOPDPatients = async () => {
+        //use OPDPatientAPI.Get
+        const response = await getDataFromServer(OPD_PATIENT_API, 'GET');
         if (response) {
             if (response.statusCode == 200) {
-                const patients = response.records;
-                //update state with new patients
+                const OPDPatients = response.records;
+                //update state with new OPDPatients
                 setState({
                     ...state,
-                    patients: patients
+                    OPDPatients: OPDPatients
                 })
             } else {
                 //handle 404/400/500 errors here
@@ -27,21 +27,21 @@ const Patient = () => {
         }
     }
     useEffect(() => {
-        if (state.patients == null) {
-            getPatients();
+        if (state.OPDPatients == null) {
+            getOPDPatients();
         }
     }, []);
     return (
         <>
-            <AppTitle title={'Patient Dashboard'} />
+            <AppTitle title={'OPDPatient Dashboard'} />
             {
-                state.patients != null && state.patients.length > 0
+                state.OPDPatients != null && state.OPDPatients.length > 0
                     ?
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 {
-                                    Object.keys(state.patients[0]).map((property, index) => (
+                                    Object.keys(state.OPDPatients[0]).map((property, index) => (
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
@@ -49,11 +49,11 @@ const Patient = () => {
                         </thead>
                         <tbody>
                             {
-                                state.patients.map((patient, index) => (
+                                state.OPDPatients.map((OPDPatient, index) => (
                                     <tr key={index}>
                                         {
-                                            Object.keys(patient).map((property, index) => (
-                                                <td key={index}>{patient[property]}</td>
+                                            Object.keys(OPDPatient).map((property, index) => (
+                                                <td key={index}>{OPDPatient[property]}</td>
                                             ))
                                         }
                                     </tr>
@@ -62,10 +62,10 @@ const Patient = () => {
                         </tbody>
                     </table>
                     :
-                    <div>No patient records</div>
+                    <div>No OPDPatient records</div>
             }
         </>
     );
 }
 
-export default Patient;
+export default OPDPatient;

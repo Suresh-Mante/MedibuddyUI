@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Menu = () => {
 
     const [state, setState] = useState({
-        isWidthFull: false,
+        isWidthFull: true,
         activeTab: '/Dashboard'
     });
 
@@ -95,7 +95,42 @@ const Menu = () => {
                         {state.isWidthFull ? 'Doctor' : null}
                     </li>
                 </Link>
-                {/*Test*/}
+                {/* Ward */}
+                <Link to='/Ward' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/Ward')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/Ward' ?
+                        'active' : ''}`}>
+                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
+                            style={{ marginRight: '5px' }}>
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                fill='currentColor'></path></svg>
+                        {state.isWidthFull ? 'Ward' : null}
+                    </li>
+                </Link>
+                {/* Room */}
+                <Link to='/Room' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/Room')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/Room' ?
+                        'active' : ''}`}>
+                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
+                            style={{ marginRight: '5px' }}>
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                fill='currentColor'></path></svg>
+                        {state.isWidthFull ? 'Room' : null}
+                    </li>
+                </Link>
+                {/* OPDPatient */}
+                <Link to='/OPDPatient' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/OPDPatient')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/OPDPatient' ?
+                        'active' : ''}`}>
+                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
+                            style={{ marginRight: '5px' }}>
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                fill='currentColor'></path></svg>
+                        {state.isWidthFull ? 'OPDPatient' : null}
+                    </li>
+                </Link>
             </ul>
         </div>
     );
