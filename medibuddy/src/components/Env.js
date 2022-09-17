@@ -15,7 +15,6 @@ export const Nurse_API = BASE_API + 'nurse';
 // OPDTest api end points
 export const OPDTest_API = BASE_API + 'opdtest';
 
-
-
-
-
+export const WARD_API = BASE_API + 'ward';
+export const ROOM_API = BASE_API + 'room';
+export const OPD_PATIENT_API = BASE_API + 'opdpatient';
