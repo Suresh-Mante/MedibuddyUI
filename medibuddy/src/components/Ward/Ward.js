@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react"
 import { WARD_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
-import {getDataFromServer} from  '../DataAccess';
+import { getDataFromServer } from '../DataAccess';
+import { Link, Route, Routes } from "react-router-dom";
+import CreateEntity from "./CreateEntity";
 
 const Ward = () => {
     const [state, setState] = useState({
@@ -26,6 +28,23 @@ const Ward = () => {
             //no internet connection/connection refused
         }
     }
+    const deleteWard = async(deleted_ward) => {
+        //use WardAPI.Delete
+        const response = await getDataFromServer(`${WARD_API}/?id=${deleted_ward.id}`, 'DELETE');
+        if (response) {
+            if (response.statusCode == 200) {
+                const deleted_ward = response.record;
+                setState({
+                    ...state,
+                    wards: state.wards.filter((ward) => {
+                        return ward.id != deleted_ward.id
+                    })
+                })
+            } else {
+            }
+        } else {
+        }
+    }
     useEffect(() => {
         if (state.wards == null) {
             getWards();
@@ -33,7 +52,15 @@ const Ward = () => {
     }, []);
     return (
         <>
-            <AppTitle title={'Ward Dashboard'} />
+            <div className="flex flex-align-center" style={{
+                gap: "10px",
+                paddingTop: '3px'
+            }}>
+                <AppTitle title={'Ward Dashboard'} />
+                <Link to='/Ward/Create'>
+                    <button className="btn btn-primary">Add new Ward</button>
+                </Link>
+            </div>
             {
                 state.wards != null && state.wards.length > 0
                     ?
@@ -45,6 +72,7 @@ const Ward = () => {
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
+                                <th colSpan={2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,6 +84,14 @@ const Ward = () => {
                                                 <td key={index}>{ward[property]}</td>
                                             ))
                                         }
+                                        <td>
+                                            <Link to={`/Ward/Edit/${ward.id}`} state={ward}>
+                                                <button className="btn btn-warning">Edit</button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <button className="btn btn-danger" onClick={() => deleteWard(ward)}>Delete</button>
+                                        </td>
                                     </tr>
                                 ))
                             }

@@ -6,3 +6,19 @@ export const pascalCase = (str) => {
 
     return pascalStr;
 }
+
+export const getOptionsArray = (arr, property) => {
+    return arr.map((item) => item[property]);
+}
+
+export const delayByXMs = async (X) => {
+    return new Promise((a, b) => {
+        setTimeout(() => {
+            a();
+        }, X);
+    }).then(() => {
+        return;
+    }).catch(() => {
+ 
+    });
+ }

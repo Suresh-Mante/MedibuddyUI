@@ -6,6 +6,7 @@ import LeftNavigation from './LeftNavigation';
 import OPDPatient from './OPDPatient/OPDPatient';
 import Patient from './Patient/Patient';
 import Room from './Room/Room';
+import CreateEntity from './Ward/CreateEntity';
 import Ward from './Ward/Ward';
 
 const Body = () => {
@@ -42,6 +43,8 @@ const Body = () => {
                     <Route path='/OPDPatient' element={<OPDPatient />} />
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/Dashboard' element={<Dashboard />} />
+                    <Route path="/Ward/Create" element={<CreateEntity />} />
+                    <Route path="/Ward/Edit/:id" element={<CreateEntity editing={true}/>} />
                 </Routes>
             </div>
         </div>

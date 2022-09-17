@@ -8,7 +8,10 @@
 export const getDataFromServer = async (url, method, body = null, contentType = 'application/json') => {
     let response = await fetch(url, {
         method: method,
-        contentType: contentType
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: method.toLowerCase() != 'get' ? JSON.stringify(body): null
     }).then(async (response) => {
         return await response.json();
     }).catch((error) => {
