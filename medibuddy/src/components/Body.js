@@ -3,7 +3,10 @@ import { Routes, Route } from 'react-router-dom';
 import { AppContext } from './App';
 import Dashboard from './Dashboard/Dashboard';
 import LeftNavigation from './LeftNavigation';
+import OPDPatient from './OPDPatient/OPDPatient';
 import Patient from './Patient/Patient';
+import Room from './Room/Room';
+import Ward from './Ward/Ward';
 
 const Body = () => {
     const appContext = useContext(AppContext);
@@ -30,10 +33,13 @@ const Body = () => {
                     null
             }
             <div className='flex flex-column flex-align-start' style={{
-                gap:'20px'
+                gap: '20px'
             }}>
                 <Routes>
                     <Route path='/Patient' element={<Patient />} />
+                    <Route path='/Ward' element={<Ward />} />
+                    <Route path='/Room' element={<Room />} />
+                    <Route path='/OPDPatient' element={<OPDPatient />} />
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/Dashboard' element={<Dashboard />} />
                 </Routes>

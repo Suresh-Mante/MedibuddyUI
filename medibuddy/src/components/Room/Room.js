@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react"
-import { PATIENT_API } from "../Env";
+import { ROOM_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
 import {getDataFromServer} from  '../DataAccess';
 
-const Patient = () => {
+const Room = () => {
     const [state, setState] = useState({
-        patients: null
+        rooms: null
     });
-    const getPatients = async () => {
-        //use PatientAPI.Get
-        const response = await getDataFromServer(PATIENT_API, 'GET');
+    const getRooms = async () => {
+        //use RoomAPI.Get
+        const response = await getDataFromServer(ROOM_API, 'GET');
         if (response) {
             if (response.statusCode == 200) {
-                const patients = response.records;
-                //update state with new patients
+                const rooms = response.records;
+                //update state with new rooms
                 setState({
                     ...state,
-                    patients: patients
+                    rooms: rooms
                 })
             } else {
                 //handle 404/400/500 errors here
@@ -27,21 +27,21 @@ const Patient = () => {
         }
     }
     useEffect(() => {
-        if (state.patients == null) {
-            getPatients();
+        if (state.rooms == null) {
+            getRooms();
         }
     }, []);
     return (
         <>
-            <AppTitle title={'Patient Dashboard'} />
+            <AppTitle title={'Room Dashboard'} />
             {
-                state.patients != null && state.patients.length > 0
+                state.rooms != null && state.rooms.length > 0
                     ?
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 {
-                                    Object.keys(state.patients[0]).map((property, index) => (
+                                    Object.keys(state.rooms[0]).map((property, index) => (
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
@@ -49,11 +49,11 @@ const Patient = () => {
                         </thead>
                         <tbody>
                             {
-                                state.patients.map((patient, index) => (
+                                state.rooms.map((room, index) => (
                                     <tr key={index}>
                                         {
-                                            Object.keys(patient).map((property, index) => (
-                                                <td key={index}>{patient[property]}</td>
+                                            Object.keys(room).map((property, index) => (
+                                                <td key={index}>{room[property]}</td>
                                             ))
                                         }
                                     </tr>
@@ -62,10 +62,10 @@ const Patient = () => {
                         </tbody>
                     </table>
                     :
-                    <div>No patient records</div>
+                    <div>No room records</div>
             }
         </>
     );
 }
 
-export default Patient;
+export default Room;
