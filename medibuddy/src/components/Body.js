@@ -9,6 +9,7 @@ import Doctor from './Doctor/Doctor';
 import Nurse from './Nurse/Nurse';
 import OPDTest from './OPDTest/OPDTest';
 import Room from './Room/Room';
+import CreateEntity from './Ward/CreateEntity';
 import Ward from './Ward/Ward';
 import Test from './Test/Test';
 import Medicine from './Medicine/Medicine';
@@ -59,6 +60,8 @@ const Body = () => {
                     <Route path='OPDBilling' element={<OPDBilling />} />
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/Dashboard' element={<Dashboard />} />
+                    <Route path="/Ward/Create" element={<CreateEntity />} />
+                    <Route path="/Ward/Edit/:id" element={<CreateEntity editing={true}/>} />
                 </Routes>
             </div>
         </div>
