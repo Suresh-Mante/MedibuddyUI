@@ -10,6 +10,10 @@ import Nurse from './Nurse/Nurse';
 import OPDTest from './OPDTest/OPDTest';
 import Room from './Room/Room';
 import Ward from './Ward/Ward';
+import Test from './Test/Test';
+import Medicine from './Medicine/Medicine';
+import OPDMedicine from './OPDMedicine/OPDMedicine';
+
 
 const Body = () => {
     const appContext = useContext(AppContext);
@@ -39,6 +43,10 @@ const Body = () => {
                 gap: '20px'
             }}>
                 <Routes>
+                    
+                    <Route path='/Medicine' element={<Medicine />} />
+                    <Route path='/OPDMedicine' element={<OPDMedicine />} />
+                    <Route path='/Test' element={<Test />} />
                     <Route path='/Patient' element={<Patient />} />
                     <Route path='/Doctor' element={<Doctor/>} />
                     <Route path='/OPDTest' element={<OPDTest/>} />

@@ -155,6 +155,42 @@ const Menu = () => {
                         {state.isWidthFull ? 'OPDTest' : null}
                     </li>
                 </Link>
+                {/*Test*/}
+                <Link to='/Test' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/Test')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/Test' ?
+                        'active' : ''}`}>
+                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
+                            style={{ marginRight: '5px' }}>
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                fill='currentColor'></path></svg>
+                        {state.isWidthFull ? 'Test' : null}
+                    </li>
+                </Link>
+                {/*Medicine*/}
+                <Link to='/Medicine' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/Medicine')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/Medicine' ?
+                        'active' : ''}`}>
+                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
+                            style={{ marginRight: '5px' }}>
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                fill='currentColor'></path></svg>
+                        {state.isWidthFull ? 'Medicine' : null}
+                    </li>
+                </Link>
+                {/*OPDMedicine*/}
+                <Link to='/OPDMedicine' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/OPDMedicine')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/OPDMedicine' ?
+                        'active' : ''}`}>
+                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
+                            style={{ marginRight: '5px' }}>
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                fill='currentColor'></path></svg>
+                        {state.isWidthFull ? 'OPDMedicine' : null}
+                    </li>
+                </Link>
             </ul>
         </div>
     );
