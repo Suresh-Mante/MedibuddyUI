@@ -182,7 +182,7 @@ const CreateEntityDoctor = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="fees">Fees</label>
-                    <input className="form-control" value={state.doctor.fees} type={'number'}
+                    <input className="form-control" value={state.doctor.fees} type={'text'}
                         onChange={(event) => setState({
                             ...state,
                             doctor: {
@@ -193,7 +193,7 @@ const CreateEntityDoctor = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="salary">Salary</label>
-                    <input className="form-control" value={state.doctor.salary} type={'number'}
+                    <input className="form-control" value={state.doctor.salary} type={'text'}
                         onChange={(event) => setState({
                             ...state,
                             doctor: {
