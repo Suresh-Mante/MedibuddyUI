@@ -1,3 +1,5 @@
+
+
 export const APP_TITLE = 'Medibuddy';
 
 //base address of all apis
