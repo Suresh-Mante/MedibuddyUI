@@ -3,6 +3,10 @@ import { TEST_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
 import {getDataFromServer} from  '../DataAccess';
+
+import { Link, Route, Routes } from "react-router-dom";
+import CreateEntityTest from "./CreateEntityTest";
+
 const Test = () => {
     const [state, setState] = useState({
         tests: null
@@ -25,6 +29,25 @@ const Test = () => {
             //no internet connection/connection refused
         }
     }
+
+    const deleteTest = async(deleted_test) => {
+        //use TESTAPI.Delete
+        const response = await getDataFromServer(`${TEST_API}/?id=${deleted_test.id}`, 'DELETE');
+        if (response) {
+            if (response.statusCode == 200) {
+                const deleted_test = response.record;
+                setState({
+                    ...state,
+                    tests: state.tests.filter((test) => {
+                        return test.id != deleted_test.id
+                    })
+                })
+            } else {
+            }
+        } else {
+        }
+    }
+
     useEffect(() => {
         if (state.tests == null) {
             getTests();
@@ -32,7 +55,15 @@ const Test = () => {
     }, []);
     return (
         <>
-            <AppTitle title={'Test Dashboard'} />
+            <div className="flex flex-align-center" style={{
+                gap: "10px",
+                paddingTop: '3px'
+            }}>
+                <AppTitle title={'Test Dashboard'} />
+                <Link to='/Test/Create'>
+                    <button className="btn btn-primary">Add new Test</button>
+                </Link>
+            </div>
             {
                 state.tests != null && state.tests.length > 0
                     ?
@@ -44,6 +75,7 @@ const Test = () => {
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
+                                <th colSpan={2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +87,14 @@ const Test = () => {
                                                 <td key={index}>{test[property]}</td>
                                             ))
                                         }
+                                        <td>
+                                            <Link to={`/Test/Edit/${test.id}`} state={test}>
+                                                <button className="btn btn-warning">Edit</button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <button className="btn btn-danger" onClick={() => deleteTest(test)}>Delete</button>
+                                        </td>
                                     </tr>
                                 ))
                             }
