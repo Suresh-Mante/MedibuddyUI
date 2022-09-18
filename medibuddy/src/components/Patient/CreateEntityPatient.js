@@ -16,14 +16,14 @@ const CreateEntityPatient = (props) => {
     }
     const [state, setState] = useState({
         patient: {
-            FirstName : existing_patient ? existing_patient.FirstName : "",
-            MidName : existing_patient ? existing_patient.MidName : "",
-            LastName : existing_patient ? existing_patient.LastName : "",
+            firstName : existing_patient ? existing_patient.firstName : "",
+            midName : existing_patient ? existing_patient.midName : "",
+            lastName : existing_patient ? existing_patient.lastName : "",
             mobile : existing_patient ? existing_patient.mobile : "",
             email : existing_patient ?  existing_patient.email : "",
             address : existing_patient ? existing_patient.address : "",
             gender : existing_patient ? existing_patient.gender : "",
-            DOB : existing_patient ? existing_patient.DOB : "",
+            dob : existing_patient ? existing_patient.dob : "",
         },
         validationErrors: [],
         creating: false,
@@ -33,10 +33,10 @@ const CreateEntityPatient = (props) => {
     });
     const patientValid = () => {
         const validationErrors = [];
-        if (state.patient.FirstName == "") {
+        if (state.patient.firstName == "") {
             validationErrors.push(`Patient Firstname is required`);
         }
-        if (state.patient.LastName == "") {
+        if (state.patient.lastName == "") {
             validationErrors.push(`Patient Lastname is required`);
         }
         if (state.patient.mobile == "") {
@@ -48,8 +48,8 @@ const CreateEntityPatient = (props) => {
         if (state.patient.gender.length >1 ) {
             validationErrors.push(`Enter only M/F for gender`);
         }
-        if (state.patient.DOB == "") {
-            validationErrors.push(`Patient DOB is required`);
+        if (state.patient.dob == "") {
+            validationErrors.push(`Patient dob is required`);
         }
         if (state.patient.address == "") {
             validationErrors.push(`Patient Address is required`);
@@ -66,14 +66,14 @@ const CreateEntityPatient = (props) => {
                     ...state,
                     patient: existing_patient ? state.patient :
                         {
-                            FirstName: "",
-                            MidName: "",
-                            LastName: "",
+                            firstName: "",
+                            midName: "",
+                            lastName: "",
                             mobile: "",
                             email :"",
                             address: "",
                             gender : "",
-                            DOB : "",
+                            dob : "",
                         },
                     creating: false,
                     messages: [`patient ${existing_patient ? 'updated' : 'created'} successfully...`]
@@ -128,41 +128,41 @@ const CreateEntityPatient = (props) => {
                 gap: '5px'
             }}>
                 <div className="form-group">
-                    <label htmlFor="FirstName">FirstName</label>
-                    <input className="form-control" value={state.patient.FirstName} type={'text'}
+                    <label htmlFor="firstName">firstName</label>
+                    <input className="form-control" value={state.patient.firstName} type={'text'}
                         onChange={(event) => setState({
                             ...state,
                             patient: {
                                 ...state.patient,
-                                FirstName: event.target.value
+                                firstName: event.target.value
                             }
                         })}></input>
                 </div>  
                 <div className="form-group">
-                    <label htmlFor="MidName">MidName</label>
-                    <input className="form-control" value={state.patient.MidName} type={'text'}
+                    <label htmlFor="midName">midName</label>
+                    <input className="form-control" value={state.patient.midName} type={'text'}
                         onChange={(event) => setState({
                             ...state,
                             patient: {
                                 ...state.patient,
-                                MidName: event.target.value
+                                midName: event.target.value
                             }
                         })}></input>
                 </div>  
                 <div className="form-group">
-                    <label htmlFor="LastName">LastName</label>
-                    <input className="form-control" value={state.patient.LastName} type={'text'}
+                    <label htmlFor="lastName">lastName</label>
+                    <input className="form-control" value={state.patient.lastName} type={'text'}
                         onChange={(event) => setState({
                             ...state,
                             patient: {
                                 ...state.patient,
-                                LastName: event.target.value
+                                lastName: event.target.value
                             }
                         })}></input>
                 </div>              
                 <div className="form-group">
                     <label htmlFor="mobile">Mobile No</label>
-                    <input className="form-control" value={state.patient.mobile} type={'text'}
+                    <input className="form-control" value={state.patient.mobile} type={'number'}
                         onChange={(event) => setState({
                             ...state,
                             patient: {
@@ -205,13 +205,13 @@ const CreateEntityPatient = (props) => {
                         })}></input>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="DOB">DOB</label>
-                    <input className="form-control" value={state.patient.DOB} type={'text'}
+                    <label htmlFor="dob">dob</label>
+                    <input className="form-control" value={state.patient.dob} type={'text'}
                         onChange={(event) => setState({
                             ...state,
                             patient: {
                                 ...state.patient,
-                                DOB: event.target.value
+                                dob: event.target.value
                             }
                         })}></input>
                 </div>
