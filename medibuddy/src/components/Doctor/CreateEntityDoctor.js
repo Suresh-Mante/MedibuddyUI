@@ -11,6 +11,8 @@ const CreateEntityDoctor = (props) => {
     //for editing
     let existing_doctor = null;
     const location = useLocation();
+    const gender = ['Male', 'Female'];
+    const type = ['Employee','Contractual'];
     if (props.editing) {
         existing_doctor = location.state;
     }
@@ -138,14 +140,22 @@ const CreateEntityDoctor = (props) => {
                 </div>              
                 <div className="form-group">
                     <label htmlFor="type">Type</label>
-                    <input className="form-control" value={state.doctor.type} type={'text'}
+                    <select value={state.doctor.type} className="form-control"
                         onChange={(event) => setState({
                             ...state,
                             doctor: {
                                 ...state.doctor,
                                 type: event.target.value
                             }
-                        })}></input>
+                        })}>                      
+                        <option>Select Job Type</option>
+                        {
+
+                            type.map((job, id) => (
+                                <option key={id} value={job}>{job}</option>
+                            ))
+                        }
+                    </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="mobile">Mobile No</label>
@@ -171,14 +181,22 @@ const CreateEntityDoctor = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="gender">Gender</label>
-                    <input className="form-control" value={state.doctor.gender} type={'text'}
+                    <select value={state.doctor.gender} className="form-control"
                         onChange={(event) => setState({
                             ...state,
                             doctor: {
                                 ...state.doctor,
                                 gender: event.target.value
                             }
-                        })}></input>
+                        })}>                      
+                        <option>Select Gender</option>
+                        {
+
+                            gender.map((gen, idx) => (
+                                <option key={idx} value={gen[0]}>{gen}</option>
+                            ))
+                        }
+                    </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="fees">Fees</label>

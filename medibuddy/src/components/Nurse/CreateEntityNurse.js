@@ -11,17 +11,18 @@ const CreateEntityNurse = (props) => {
     //for editing
     let existing_nurse = null;
     const location = useLocation();
+    const gender = ['Male', 'Female'];
     if (props.editing) {
         existing_nurse = location.state;
     }
     const [state, setState] = useState({
         nurse: {
-            name : existing_nurse ? existing_nurse.name : "",
-            type : existing_nurse ? existing_nurse.type : "",
-            mobile : existing_nurse ? existing_nurse.mobile : "",
-            email : existing_nurse ?  existing_nurse.email : "",
-            gender : existing_nurse ? existing_nurse.gender : "",
-            salary : existing_nurse ? existing_nurse.salary :0,
+            name: existing_nurse ? existing_nurse.name : "",
+            type: existing_nurse ? existing_nurse.type : "",
+            mobile: existing_nurse ? existing_nurse.mobile : "",
+            email: existing_nurse ? existing_nurse.email : "",
+            gender: existing_nurse ? existing_nurse.gender : "",
+            salary: existing_nurse ? existing_nurse.salary : 0,
         },
         validationErrors: [],
         creating: false,
@@ -40,10 +41,10 @@ const CreateEntityNurse = (props) => {
         if (state.nurse.gender == "") {
             validationErrors.push(`Gender is required`);
         }
-        if (state.nurse.gender.length >1 ) {
+        if (state.nurse.gender.length > 1) {
             validationErrors.push(`Enter only M/F for gender`);
-        }       
-        if (state.nurse.salary <=0 ) {
+        }
+        if (state.nurse.salary <= 0) {
             validationErrors.push(`Salary must be positive`);
         }
         return validationErrors;
@@ -60,9 +61,9 @@ const CreateEntityNurse = (props) => {
                         {
                             name: "",
                             mobile: "",
-                            email :"",
-                            gender : "",
-                            salary :0,
+                            email: "",
+                            gender: "",
+                            salary: 0,
                         },
                     creating: false,
                     messages: [`nurse ${existing_nurse ? 'updated' : 'created'} successfully...`]
@@ -126,7 +127,7 @@ const CreateEntityNurse = (props) => {
                                 name: event.target.value
                             }
                         })}></input>
-                </div>              
+                </div>
                 <div className="form-group">
                     <label htmlFor="mobile">Mobile No</label>
                     <input className="form-control" value={state.nurse.mobile} type={'text'}
@@ -151,14 +152,22 @@ const CreateEntityNurse = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="gender">Gender</label>
-                    <input className="form-control" value={state.nurse.gender} type={'text'}
+                    <select value={state.nurse.gender} className="form-control"
                         onChange={(event) => setState({
                             ...state,
                             nurse: {
                                 ...state.nurse,
                                 gender: event.target.value
                             }
-                        })}></input>
+                        })}>                      
+                        <option>Select Gender</option>
+                        {
+
+                            gender.map((gen, idx) => (
+                                <option key={idx} value={gen[0]}>{gen}</option>
+                            ))
+                        }
+                    </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="salary">Salary</label>
