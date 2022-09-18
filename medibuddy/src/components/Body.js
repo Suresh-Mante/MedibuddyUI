@@ -8,6 +8,7 @@ import Patient from './Patient/Patient';
 import Room from './Room/Room';
 import CreateEntity from './Ward/CreateEntity';
 import CreateRoom from './Room/CreateEntity';
+import CreateOPDPatient from './OPDPatient/CreateEntity';
 import Ward from './Ward/Ward';
 
 const Body = () => {
@@ -48,6 +49,8 @@ const Body = () => {
                     <Route path="/Ward/Edit/:id" element={<CreateEntity editing={true}/>} />
                     <Route path="/Room/Create" element={<CreateRoom />} />
                     <Route path="/Room/Edit/:id" element={<CreateRoom editing={true}/>} />
+                    <Route path="/OPDPatient/Create" element={<CreateOPDPatient />} />
+                    <Route path="/OPDPatient/Edit/:id" element={<CreateOPDPatient editing={true}/>} />
                 </Routes>
             </div>
         </div>
