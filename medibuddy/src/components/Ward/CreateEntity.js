@@ -101,7 +101,7 @@ const CreateEntity = (props) => {
             } else {
                 setState({
                     ...state,
-                    errors: [response.message]
+                    errors: [response.statusMessage]
                 });
             }
         } else {
