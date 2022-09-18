@@ -4,7 +4,6 @@ import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
 import { getDataFromServer } from '../DataAccess';
 import { Link, Route, Routes } from "react-router-dom";
-import CreateEntity from "./CreateEntity";
 
 const Ward = () => {
     const [state, setState] = useState({

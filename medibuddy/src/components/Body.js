@@ -12,6 +12,7 @@ import Nurse from './Nurse/Nurse';
 import OPDTest from './OPDTest/OPDTest';
 import Room from './Room/Room';
 import CreateEntity from './Ward/CreateEntity';
+import CreateRoom from './Room/CreateEntity';
 import Ward from './Ward/Ward';
 import Test from './Test/Test';
 import Medicine from './Medicine/Medicine';
@@ -64,10 +65,14 @@ const Body = () => {
                     <Route path='/Dashboard' element={<Dashboard />} />
                     <Route path="/Ward/Create" element={<CreateEntity />} />
                     <Route path="/Ward/Edit/:id" element={<CreateEntity editing={true}/>} />
+
                     <Route path="/Doctor/Create" element={<CreateEntityDoctor />} />
                     <Route path="/Doctor/Edit/:id" element={<CreateEntityDoctor editing={true}/>} />
                     <Route path="/Nurse/Create" element={<CreateEntityNurse />} />
                     <Route path="/Nurse/Edit/:id" element={<CreateEntityNurse editing={true}/>} />
+
+                    <Route path="/Room/Create" element={<CreateRoom />} />
+                    <Route path="/Room/Edit/:id" element={<CreateRoom editing={true}/>} />
                 </Routes>
             </div>
         </div>
