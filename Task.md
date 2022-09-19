@@ -20,3 +20,9 @@
     - Ward
     - Room
     - OPDPatient
+
+# 19Sep
+- Suresh
+  - Discharge functionality
+- Ajay
+  - Db table creation
