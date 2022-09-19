@@ -83,16 +83,16 @@ const Menu = () => {
                         {state.isWidthFull ? 'Patient' : null}
                     </li>
                 </Link>
-                {/* OPDBilling */}
-                <Link to='/OPDBilling' className='non-decor-link' id='home-link'
-                    onClick={() => updateActiveTab('/OPDBilling')}>
-                    <li className={`one-line-text  flex ${state.activeTab == '/OPDBilling' ?
+                {/* Department */}
+                <Link to='/Department' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/Department')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/Department' ?
                         'active' : ''}`}>
                         <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
                             style={{ marginRight: '5px' }}>
                             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
                                 fill='currentColor'></path></svg>
-                        {state.isWidthFull ? 'OPDBilling' : null}
+                        {state.isWidthFull ? 'Department' : null}
                     </li>
                 </Link>
                 {/* Doctor */}
@@ -155,6 +155,7 @@ const Menu = () => {
                         {state.isWidthFull ? 'Nurse' : null}
                     </li>
                 </Link>
+                
                 {/* OPDBilling */}
                 <Link to='/OPDBilling' className='non-decor-link' id='home-link'
                     onClick={() => updateActiveTab('/OPDBilling')}>
