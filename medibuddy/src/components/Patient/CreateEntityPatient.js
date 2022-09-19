@@ -6,10 +6,12 @@ import Select from '../Shared/Select';
 import { getOptionsArray } from "../Utils";
 import Loading from '../Shared/Loading';
 import { Link, useLocation } from "react-router-dom";
+import { formatDate} from "../Utils";
 
 const CreateEntityPatient = (props) => {
     //for editing
     let existing_patient = null;
+    const gender = ['Male', 'Female'];
     const location = useLocation();
     if (props.editing) {
         existing_patient = location.state;
@@ -23,7 +25,7 @@ const CreateEntityPatient = (props) => {
             email : existing_patient ?  existing_patient.email : "",
             address : existing_patient ? existing_patient.address : "",
             gender : existing_patient ? existing_patient.gender : "",
-            dob : existing_patient ? existing_patient.dob : "",
+            DOB : existing_patient ? existing_patient.dob : formatDate(new Date()),
         },
         validationErrors: [],
         creating: false,
@@ -48,7 +50,7 @@ const CreateEntityPatient = (props) => {
         if (state.patient.gender.length >1 ) {
             validationErrors.push(`Enter only M/F for gender`);
         }
-        if (state.patient.dob == "") {
+        if (state.patient.DOB == "") {
             validationErrors.push(`Patient dob is required`);
         }
         if (state.patient.address == "") {
@@ -73,7 +75,7 @@ const CreateEntityPatient = (props) => {
                             email :"",
                             address: "",
                             gender : "",
-                            dob : "",
+                            DOB : new Date(),
                         },
                     creating: false,
                     messages: [`patient ${existing_patient ? 'updated' : 'created'} successfully...`]
@@ -193,20 +195,29 @@ const CreateEntityPatient = (props) => {
                             }
                         })}></input>
                 </div>  
+                
                 <div className="form-group">
                     <label htmlFor="gender">Gender</label>
-                    <input className="form-control" value={state.patient.gender} type={'text'}
+                    <select value={state.patient.gender} className="form-control"
                         onChange={(event) => setState({
                             ...state,
                             patient: {
                                 ...state.patient,
                                 gender: event.target.value
                             }
-                        })}></input>
+                        })}>                      
+                        <option>Select Gender</option>
+                        {
+
+                            gender.map((gen, idx) => (
+                                <option key={idx} value={gen[0]}>{gen}</option>
+                            ))
+                        }
+                    </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="dob">dob</label>
-                    <input className="form-control" value={state.patient.dob} type={'text'}
+                    <input className="form-control" value={state.patient.dob} type={'date'}
                         onChange={(event) => setState({
                             ...state,
                             patient: {
