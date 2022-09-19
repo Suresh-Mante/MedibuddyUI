@@ -159,7 +159,7 @@ const CreateEntityDoctor = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="mobile">Mobile No</label>
-                    <input className="form-control" value={state.doctor.mobile} type={'text'}
+                    <input className="form-control" value={state.doctor.mobile} type={'number'}
                         onChange={(event) => setState({
                             ...state,
                             doctor: {

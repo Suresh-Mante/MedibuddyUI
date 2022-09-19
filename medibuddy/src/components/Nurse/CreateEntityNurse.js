@@ -41,9 +41,6 @@ const CreateEntityNurse = (props) => {
         if (state.nurse.gender == "") {
             validationErrors.push(`Gender is required`);
         }
-        if (state.nurse.gender.length > 1) {
-            validationErrors.push(`Enter only M/F for gender`);
-        }
         if (state.nurse.salary <= 0) {
             validationErrors.push(`Salary must be positive`);
         }
@@ -130,7 +127,7 @@ const CreateEntityNurse = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="mobile">Mobile No</label>
-                    <input className="form-control" value={state.nurse.mobile} type={'text'}
+                    <input className="form-control" value={state.nurse.mobile} type={'number'}
                         onChange={(event) => setState({
                             ...state,
                             nurse: {
