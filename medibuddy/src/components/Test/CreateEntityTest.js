@@ -10,12 +10,12 @@ import { Link, useLocation } from "react-router-dom";
 const CreateEntityTest = (props) => {
     //for editing
     let existing_test = null;
-    /*const location = useLocation();
+    const location = useLocation();
     if (props.editing) {
-        existing_doctor = location.state;
-    }*/
+        existing_test = location.state;
+    }
     const [state, setState] = useState({
-        doctor: {
+        test: {
             name : existing_test ? existing_test.name : "",
             price : existing_test ? existing_test.price :0,
         },
@@ -113,12 +113,12 @@ const CreateEntityTest = (props) => {
                 </div>  
                 <div className="form-group">
                     <label htmlFor="price">Price</label>
-                    <input className="form-control" value={state.test.price} type={'text'}
+                    <input className="form-control" value={state.test.price} type={'number'}
                         onChange={(event) => setState({
                             ...state,
                             test: {
                                 ...state.test,
-                                price: Number(event.target.value)
+                                price: event.target.value
                             }
                         })}></input>
                 </div>
