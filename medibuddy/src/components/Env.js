@@ -10,7 +10,7 @@ export const PATIENT_API = BASE_API + 'patient';
 export const DOCTOR_API = BASE_API + 'doctor';
 
 //nurse api end points
-export const Nurse_API = BASE_API + 'nurse';
+export const NURSE_API = BASE_API + 'nurse';
 
 // OPDTest api end points
 export const OPDTest_API = BASE_API + 'opdtest';
