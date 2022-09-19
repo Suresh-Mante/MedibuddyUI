@@ -1,5 +1,4 @@
 ﻿import React, { useContext } from 'react';
-import '../../css/style.css';
 import { AppContext} from '../App'
 import { APP_TITLE } from '../Env';
 import AppTitle from './AppTitle';
