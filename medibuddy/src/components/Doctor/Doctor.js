@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react"
 import { DOCTOR_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
-import {getDataFromServer} from  '../DataAccess';
+import { getDataFromServer } from '../DataAccess';
+import { Link, Route, Routes } from "react-router-dom";
+import CreateEntityDoctor from "./CreateEntityDoctor";
+
 const Doctor = () => {
     const [state, setState] = useState({
         doctors: null
@@ -25,6 +28,23 @@ const Doctor = () => {
             //no internet connection/connection refused
         }
     }
+    const deleteDoctor = async(deleted_doctor) => {
+        //use DoctorAPI.Delete
+        const response = await getDataFromServer(`${DOCTOR_API}/?id=${deleted_doctor.id}`, 'DELETE');
+        if (response) {
+            if (response.statusCode == 200) {
+                const deleted_doctor = response.record;
+                setState({
+                    ...state,
+                    doctors: state.doctors.filter((doctor) => {
+                        return doctor.id != deleted_doctor.id
+                    })
+                })
+            } else {
+            }
+        } else {
+        }
+    }
     useEffect(() => {
         if (state.doctors == null) {
             getDoctors();
@@ -32,7 +52,15 @@ const Doctor = () => {
     }, []);
     return (
         <>
-            <AppTitle title={'Doctor Dashboard'} />
+            <div className="flex flex-align-center" style={{
+                gap: "10px",
+                paddingTop: '3px'
+            }}>
+                <AppTitle title={'Doctor Dashboard'} />
+                <Link to='/Doctor/Create'>
+                    <button className="btn btn-primary">Add new Doctor</button>
+                </Link>
+            </div>
             {
                 state.doctors != null && state.doctors.length > 0
                     ?
@@ -44,6 +72,7 @@ const Doctor = () => {
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
+                                <th colSpan={2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +84,14 @@ const Doctor = () => {
                                                 <td key={index}>{doctor[property]}</td>
                                             ))
                                         }
+                                        <td>
+                                            <Link to={`/Doctor/Edit/${doctor.id}`} state={doctor}>
+                                                <button className="btn btn-warning">Edit</button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <button className="btn btn-danger" onClick={() => deleteDoctor(doctor)}>Delete</button>
+                                        </td>
                                     </tr>
                                 ))
                             }
