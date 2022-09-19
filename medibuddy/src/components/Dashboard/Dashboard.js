@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import AppTitle from "../Header/AppTitle";
-import { Department_API, DOCTOR_API, Nurse_API, OPD_PATIENT_API, PATIENT_API, ROOM_API, WARD_API } from '../Env';
+import { Department_API, DOCTOR_API, NURSE_API, OPD_PATIENT_API, PATIENT_API, ROOM_API, WARD_API } from '../Env';
 import { getDataFromServer } from '../DataAccess';
 import patientLogo from '../../images/patient.png';
 import doctorLogo from '../../images/doctor.png';
@@ -37,7 +37,7 @@ const Dashboard = () => {
         } else { }
     }
     const getNurses = async () => {
-        const response = await getDataFromServer(Nurse_API, 'GET');
+        const response = await getDataFromServer(NURSE_API, 'GET');
         if (response) {
             if (response.statusCode == 200) {
                 const nurses = response.records;
