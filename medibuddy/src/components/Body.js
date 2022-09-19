@@ -20,6 +20,7 @@ import Medicine from './Medicine/Medicine';
 import OPDMedicine from './OPDMedicine/OPDMedicine';
 import Department from './Department/Department';
 import OPDBilling from './OPDBilling/OPDBilling';
+import CreateEntityTest from './Test/CreateEntityTest';
 import CreateEntityPatient from './Patient/CreateEntityPatient';
 import CreateEntityDepartment from './Department/CreateEntityDepartment';
 import CreateEntityOPDBilling from './OPDBilling/CreateEntityOPDBilling';
@@ -58,6 +59,8 @@ const Body = () => {
                     <Route path='/Medicine' element={<Medicine />} />
                     <Route path='/OPDMedicine' element={<OPDMedicine />} />
                     <Route path='/Test' element={<Test />} />
+                    <Route path="/Test/Create" element={<CreateEntityTest />} />
+                    <Route path="/Test/Edit/:id" element={<CreateEntityTest editing={true}/>} />
                     <Route path="/Medicine/Create" element={<CreateEntityMedicine />} />
                     <Route path="/Medicine/Edit/:id" element={<CreateEntityMedicine editing={true}/>} />
                     <Route path='/Patient' element={<Patient />} />
