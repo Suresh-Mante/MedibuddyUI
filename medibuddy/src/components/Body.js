@@ -46,7 +46,8 @@ const Body = () => {
                     null
             }
             <div className='flex flex-column flex-align-start' style={{
-                gap: '20px'
+                gap: '20px',
+                overflow: 'auto'
             }}>
                 <Routes>
                     

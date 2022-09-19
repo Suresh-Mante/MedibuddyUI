@@ -10,11 +10,11 @@ const Loading = ({ params }) => {
                 let circle = document.getElementById('loading-circle');
                 if (circle == undefined) break;
                 await delayByXMs(1500);
-                circle.style.stroke = 'red';
+                circle.style.stroke = params && params.color ? params.color : "red";
                 await delayByXMs(1500);
-                circle.style.stroke = 'green';
+                circle.style.stroke = params && params.color ? params.color : "green";
                 await delayByXMs(1500);
-                circle.style.stroke = 'dodgerblue';
+                circle.style.stroke = params && params.color ? params.color : "dodgerblue";
             }
         } catch (e) { }
     }
@@ -29,7 +29,7 @@ const Loading = ({ params }) => {
                 height={params && params.size ? params.size + 'px' : '30px'}
                 viewBox="0 0 44 44" role="status">
                 <circle className="loading-circle" id='loading-circle' cx="22" cy="22" r="20"
-                    fill="none" stroke="dodgerblue" strokeWidth="4">
+                    fill="none" stroke={params && params.color ? params.color : "dodgerblue"} strokeWidth="4">
                 </circle>
             </svg>
         </div>
