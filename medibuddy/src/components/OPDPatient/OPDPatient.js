@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react"
 import { OPD_PATIENT_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
-import {getDataFromServer} from  '../DataAccess';
+import { getDataFromServer } from '../DataAccess';
+import { Link, Route, Routes } from "react-router-dom";
+
 
 const OPDPatient = () => {
     const [state, setState] = useState({
@@ -26,6 +28,23 @@ const OPDPatient = () => {
             //no internet connection/connection refused
         }
     }
+    const deleteOPDPatient = async(deleted_OPDPatient) => {
+        //use OPDPatientAPI.Delete
+        const response = await getDataFromServer(`${OPD_PATIENT_API}/?id=${deleted_OPDPatient.id}`, 'DELETE');
+        if (response) {
+            if (response.statusCode == 200) {
+                const deleted_OPDPatient = response.record;
+                setState({
+                    ...state,
+                    OPDPatients: state.OPDPatients.filter((OPDPatient) => {
+                        return OPDPatient.id != deleted_OPDPatient.id
+                    })
+                })
+            } else {
+            }
+        } else {
+        }
+    }
     useEffect(() => {
         if (state.OPDPatients == null) {
             getOPDPatients();
@@ -33,7 +52,15 @@ const OPDPatient = () => {
     }, []);
     return (
         <>
-            <AppTitle title={'OPDPatient Dashboard'} />
+            <div className="flex flex-align-center" style={{
+                gap: "10px",
+                paddingTop: '3px'
+            }}>
+                <AppTitle title={'OPDPatient Dashboard'} />
+                <Link to='/OPDPatient/Create'>
+                    <button className="btn btn-primary">Add new OPDPatient</button>
+                </Link>
+            </div>
             {
                 state.OPDPatients != null && state.OPDPatients.length > 0
                     ?
@@ -45,6 +72,7 @@ const OPDPatient = () => {
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
+                                <th colSpan={2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,6 +84,14 @@ const OPDPatient = () => {
                                                 <td key={index}>{OPDPatient[property]}</td>
                                             ))
                                         }
+                                        <td>
+                                            <Link to={`/OPDPatient/Edit/${OPDPatient.id}`} state={OPDPatient}>
+                                                <button className="btn btn-warning">Edit</button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <button className="btn btn-danger" onClick={() => deleteOPDPatient(OPDPatient)}>Delete</button>
+                                        </td>
                                     </tr>
                                 ))
                             }

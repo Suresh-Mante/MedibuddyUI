@@ -553,3 +553,26 @@ th {
 .options-dialgoue {
   transform-origin: top;
 }
+
+.dashboard-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  animation-duration: .2s;
+  gap: 5px;
+}
+
+.dashboard-grid .item{
+  box-shadow: var(--box-shadow);
+  padding: 10px 20px 10px 15px;
+  border-radius: 4px;
+  background-color: rgb(58, 141, 213);
+  color: white;
+}
+
+.dashboard-grid .item .count{
+  font-size: 24px;
+}
+
+.dashboard-grid .item .title{
+  font-size: 20px;
+}
