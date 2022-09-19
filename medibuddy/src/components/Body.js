@@ -20,6 +20,7 @@ import Medicine from './Medicine/Medicine';
 import OPDMedicine from './OPDMedicine/OPDMedicine';
 import Department from './Department/Department';
 import OPDBilling from './OPDBilling/OPDBilling';
+import CreateEntityMedicine from './Medicine/CreateEntityMedicine';
 
 const Body = () => {
     const appContext = useContext(AppContext);
@@ -54,6 +55,8 @@ const Body = () => {
                     <Route path='/Medicine' element={<Medicine />} />
                     <Route path='/OPDMedicine' element={<OPDMedicine />} />
                     <Route path='/Test' element={<Test />} />
+                    <Route path="/Medicine/Create" element={<CreateEntityMedicine />} />
+                    <Route path="/Medicine/Edit/:id" element={<CreateEntityMedicine editing={true}/>} />
                     <Route path='/Patient' element={<Patient />} />
                     <Route path='/Doctor' element={<Doctor/>} />
                     <Route path='/OPDTest' element={<OPDTest/>} />

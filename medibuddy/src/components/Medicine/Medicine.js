@@ -3,6 +3,10 @@ import { MEDICINE_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
 import {getDataFromServer} from  '../DataAccess';
+
+import { Link, Route, Routes } from "react-router-dom";
+import CreateEntityMedicine from "./CreateEntityMedicine";
+
 const Medicine = () => {
     const [state, setState] = useState({
         medicines: null
@@ -13,7 +17,7 @@ const Medicine = () => {
         if (response) {
             if (response.statusCode == 200) {
                 const medicines = response.records;
-                //update state with new tests
+                //update state with new medicines
                 setState({
                     ...state,
                     medicines: medicines
@@ -25,6 +29,25 @@ const Medicine = () => {
             //no internet connection/connection refused
         }
     }
+
+    const deleteMedicine = async(deleted_medicine) => {
+        //use MEDICINEAPI.Delete
+        const response = await getDataFromServer(`${MEDICINE_API}/?id=${deleted_medicine.id}`, 'DELETE');
+        if (response) {
+            if (response.statusCode == 200) {
+                const deleted_medicine = response.record;
+                setState({
+                    ...state,
+                    medicines: state.medicines.filter((medicine) => {
+                        return medicine.id != deleted_medicine.id
+                    })
+                })
+            } else {
+            }
+        } else {
+        }
+    }
+
     useEffect(() => {
         if (state.medicines == null) {
             getMedicines();
@@ -32,7 +55,15 @@ const Medicine = () => {
     }, []);
     return (
         <>
-            <AppTitle title={'Medicine Dashboard'} />
+           <div className="flex flex-align-center" style={{
+                gap: "10px",
+                paddingTop: '3px'
+            }}>
+                <AppTitle title={'Medicine Dashboard'} />
+                <Link to='/Medicine/Create'>
+                    <button className="btn btn-primary">Add new Medicine</button>
+                </Link>
+            </div>
             {
                 state.medicines != null && state.medicines.length > 0
                     ?
@@ -44,6 +75,7 @@ const Medicine = () => {
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
+                                <th colSpan={2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +87,14 @@ const Medicine = () => {
                                                 <td key={index}>{medicine[property]}</td>
                                             ))
                                         }
+                                        <td>
+                                            <Link to={`/Medicine/Edit/${medicine.id}`} state={medicine}>
+                                                <button className="btn btn-warning">Edit</button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <button className="btn btn-danger" onClick={() => deleteMedicine(medicine)}>Delete</button>
+                                        </td>
                                     </tr>
                                 ))
                             }
