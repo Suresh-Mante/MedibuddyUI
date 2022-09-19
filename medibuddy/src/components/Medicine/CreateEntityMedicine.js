@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { getDataFromServer } from "../DataAccess";
 import { BASE_API, MEDICINE_API } from "../Env";
@@ -9,13 +10,14 @@ import { Link, useLocation } from "react-router-dom";
 
 const CreateEntityMedicine = (props) => {
     //for editing
+    console.log(props.medicine);
     let existing_medicine = null;
-    /*const location = useLocation();
+    const location = useLocation();
     if (props.editing) {
-        existing_doctor = location.state;
-    }*/
+        existing_medicine = location.state;
+    }
     const [state, setState] = useState({
-        doctor: {
+        medicine: {
             name : existing_medicine ? existing_medicine.name : "",
             price : existing_medicine ? existing_medicine.price :0,
         },
@@ -113,12 +115,12 @@ const CreateEntityMedicine = (props) => {
                 </div>  
                 <div className="form-group">
                     <label htmlFor="price">Price</label>
-                    <input className="form-control" value={state.medicine.price} type={'text'}
+                    <input className="form-control" value={state.medicine.price} type={'number'}
                         onChange={(event) => setState({
                             ...state,
                             medicine: {
                                 ...state.medicine,
-                                price: Number(event.target.value)
+                                price: event.target.value
                             }
                         })}></input>
                 </div>
