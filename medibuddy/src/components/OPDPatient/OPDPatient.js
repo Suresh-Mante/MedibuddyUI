@@ -28,7 +28,7 @@ const OPDPatient = () => {
             //no internet connection/connection refused
         }
     }
-    const deleteOPDPatient = async(deleted_OPDPatient) => {
+    const deleteOPDPatient = async (deleted_OPDPatient) => {
         //use OPDPatientAPI.Delete
         const response = await getDataFromServer(`${OPD_PATIENT_API}/?id=${deleted_OPDPatient.id}`, 'DELETE');
         if (response) {
@@ -72,7 +72,7 @@ const OPDPatient = () => {
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
-                                <th colSpan={2}>Actions</th>
+                                <th colSpan={3}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,7 +81,7 @@ const OPDPatient = () => {
                                     <tr key={index}>
                                         {
                                             Object.keys(OPDPatient).map((property, index) => (
-                                                <td key={index}>{OPDPatient[property]}</td>
+                                                <td key={index}>{OPDPatient[property].toString()}</td>
                                             ))
                                         }
                                         <td>
@@ -92,6 +92,17 @@ const OPDPatient = () => {
                                         <td>
                                             <button className="btn btn-danger" onClick={() => deleteOPDPatient(OPDPatient)}>Delete</button>
                                         </td>
+                                        {
+                                            !OPDPatient.discharged ?
+                                                <td>
+                                                    <Link to={`/OPDPatient/Discharge/${OPDPatient.id}`} state={OPDPatient}>
+                                                        <button className="btn btn-success">Discharge</button>
+                                                    </Link>
+                                                </td>
+                                                : <td>
+                                                    <button className="btn btn-success" disabled>Discharge</button>
+                                                </td>
+                                        }
                                     </tr>
                                 ))
                             }

@@ -86,18 +86,7 @@ const CreateEntity = (props) => {
         if (response) {
             if (response.statusCode == 201 || response.statusCode == 204) {
                 const ward = response.record;
-                setState({
-                    ...state,
-                    ward: existing_ward ? state.ward :
-                        {
-                            depId: null,
-                            roomSpecialCapacity: 0,
-                            roomSharedCapacity: 0,
-                            roomGeneralCapacity: 0
-                        },
-                    creating: false,
-                    messages: [`Ward ${existing_ward ? 'updated' : 'created'} successfully...`]
-                });
+                window.location.href = '/Ward';
             } else {
                 setState({
                     ...state,

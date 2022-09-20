@@ -25,6 +25,7 @@ import CreateEntityPatient from './Patient/CreateEntityPatient';
 import CreateEntityDepartment from './Department/CreateEntityDepartment';
 import CreateEntityOPDBilling from './OPDBilling/CreateEntityOPDBilling';
 import CreateEntityMedicine from './Medicine/CreateEntityMedicine';
+import Discharge from './OPDPatient/Discharge';
 
 const Body = () => {
     const appContext = useContext(AppContext);
@@ -55,18 +56,18 @@ const Body = () => {
                 overflow: 'auto'
             }}>
                 <Routes>
-                    
+
                     <Route path='/Medicine' element={<Medicine />} />
                     <Route path='/OPDMedicine' element={<OPDMedicine />} />
                     <Route path='/Test' element={<Test />} />
                     <Route path="/Test/Create" element={<CreateEntityTest />} />
-                    <Route path="/Test/Edit/:id" element={<CreateEntityTest editing={true}/>} />
+                    <Route path="/Test/Edit/:id" element={<CreateEntityTest editing={true} />} />
                     <Route path="/Medicine/Create" element={<CreateEntityMedicine />} />
-                    <Route path="/Medicine/Edit/:id" element={<CreateEntityMedicine editing={true}/>} />
+                    <Route path="/Medicine/Edit/:id" element={<CreateEntityMedicine editing={true} />} />
                     <Route path='/Patient' element={<Patient />} />
-                    <Route path='/Doctor' element={<Doctor/>} />
-                    <Route path='/OPDTest' element={<OPDTest/>} />
-                    <Route path='/Nurse' element={<Nurse/>} />
+                    <Route path='/Doctor' element={<Doctor />} />
+                    <Route path='/OPDTest' element={<OPDTest />} />
+                    <Route path='/Nurse' element={<Nurse />} />
                     <Route path='/Department' element={<Department />} />
                     <Route path='/Ward' element={<Ward />} />
                     <Route path='/Room' element={<Room />} />
@@ -75,25 +76,26 @@ const Body = () => {
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/Dashboard' element={<Dashboard />} />
                     <Route path="/Ward/Create" element={<CreateEntity />} />
-                    <Route path="/Ward/Edit/:id" element={<CreateEntity editing={true}/>} />
+                    <Route path="/Ward/Edit/:id" element={<CreateEntity editing={true} />} />
                     <Route path="/Patient/Create" element={<CreateEntityPatient />} />
-                    <Route path="/Patient/Edit/:id" element={<CreateEntityPatient editing={true}/>} />
-                    
+                    <Route path="/Patient/Edit/:id" element={<CreateEntityPatient editing={true} />} />
+
                     <Route path="/Department/Create" element={<CreateEntityDepartment />} />
-                    <Route path="/Department/Edit/:id" element={<CreateEntityDepartment editing={true}/>} />
+                    <Route path="/Department/Edit/:id" element={<CreateEntityDepartment editing={true} />} />
                     <Route path="/OPDBilling/Create" element={<CreateEntityOPDBilling />} />
                     <Route path="/OPDBilling/Edit/:id" element={<CreateEntityOPDBilling editing={true} />} />
 
 
                     <Route path="/Doctor/Create" element={<CreateEntityDoctor />} />
-                    <Route path="/Doctor/Edit/:id" element={<CreateEntityDoctor editing={true}/>} />
+                    <Route path="/Doctor/Edit/:id" element={<CreateEntityDoctor editing={true} />} />
                     <Route path="/Nurse/Create" element={<CreateEntityNurse />} />
-                    <Route path="/Nurse/Edit/:id" element={<CreateEntityNurse editing={true}/>} />
+                    <Route path="/Nurse/Edit/:id" element={<CreateEntityNurse editing={true} />} />
 
                     <Route path="/Room/Create" element={<CreateRoom />} />
-                    <Route path="/Room/Edit/:id" element={<CreateRoom editing={true}/>} />
+                    <Route path="/Room/Edit/:id" element={<CreateRoom editing={true} />} />
                     <Route path="/OPDPatient/Create" element={<CreateOPDPatient />} />
-                    <Route path="/OPDPatient/Edit/:id" element={<CreateOPDPatient editing={true}/>} />
+                    <Route path="/OPDPatient/Edit/:id" element={<CreateOPDPatient editing={true} />} />
+                    <Route path="/OPDPatient/Discharge/:id" element={<Discharge />} />
                 </Routes>
             </div>
         </div>

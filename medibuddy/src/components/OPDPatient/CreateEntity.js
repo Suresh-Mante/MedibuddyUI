@@ -15,8 +15,8 @@ const CreateEntity = (props) => {
     }
     const [state, setState] = useState({
         OPDPatient: {
-            pid: existing_OPDPatient ? existing_OPDPatient.pid : null,
-            docId: existing_OPDPatient ? existing_OPDPatient.docId : null,
+            pid: existing_OPDPatient ? existing_OPDPatient.pid : 0,
+            docId: existing_OPDPatient ? existing_OPDPatient.docId : 0,
             visitDate: existing_OPDPatient ? existing_OPDPatient.visitDate : formatDate(new Date()),
             opdBillingID: existing_OPDPatient ? existing_OPDPatient.opdBillingID : 0,
         },
@@ -30,11 +30,11 @@ const CreateEntity = (props) => {
     });
     const OPDPatientValid = () => {
         const validationErrors = [];
-        if (state.OPDPatient.pid == null) {
-            validationErrors.push(`Patient id is not valid`);
+        if (state.OPDPatient.pid <= 0) {
+            validationErrors.push(`Patient id must be positive`);
         }
-        if (state.OPDPatient.docId == null) {
-            validationErrors.push(`Doctor id is not valid`);
+        if (state.OPDPatient.docId <= 0) {
+            validationErrors.push(`Doctor id must be positive`);
         }
         if (state.OPDPatient.opdBillingID <= 0) {
             validationErrors.push(`OPD BillingID must be positive`);
@@ -52,9 +52,9 @@ const CreateEntity = (props) => {
                     ...state,
                     OPDPatient: existing_OPDPatient ? state.OPDPatient :
                         {
-                            pid: null,
-                            docId: null,
-                            visitDate: new Date(),
+                            pid: 0,
+                            docId: 0,
+                            visitDate: formatDate(new Date()),
                             opdBillingID: 0,
                         },
                     creating: false,
