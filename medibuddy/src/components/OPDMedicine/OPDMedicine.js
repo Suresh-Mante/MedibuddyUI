@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react"
 import { OPDMEDICINE_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
-import {getDataFromServer} from  '../DataAccess';
+import { getDataFromServer } from '../DataAccess';
+import { Link, Route, Routes } from "react-router-dom";
+import CreateEntityOPDMedicine from "./CreateEntityOPDMedicine.js"
+
 const OPDMedicine = () => {
     const [state, setState] = useState({
         opdmedicines: null
     });
     const getOPDMedicines = async () => {
-        //use OPDMEDICINEAPI.Get
+        //use OPDMedicineAPI.Get
         const response = await getDataFromServer(OPDMEDICINE_API, 'GET');
         if (response) {
             if (response.statusCode == 200) {
@@ -25,6 +28,23 @@ const OPDMedicine = () => {
             //no internet connection/connection refused
         }
     }
+    const deleteOPDMedicine = async(deleted_opdmedicine) => {
+        //use OPDMedicineAPI.Delete
+        const response = await getDataFromServer(`${OPDMEDICINE_API}/?opdBillingID=${deleted_opdmedicine.OPDBillingID}`, 'DELETE');
+        if (response) {
+            if (response.statusCode == 200) {
+                const deleted_opdmedicine = response.record;
+                setState({
+                    ...state,
+                    opdmedicines: state.opdmedicines.filter((opdmedicine) => {
+                        return opdmedicine.OPDBillingID != deleted_opdmedicine.OPDBillingID
+                    })
+                })
+            } else {
+            }
+        } else {
+        }
+    }
     useEffect(() => {
         if (state.opdmedicines == null) {
             getOPDMedicines();
@@ -32,7 +52,15 @@ const OPDMedicine = () => {
     }, []);
     return (
         <>
-            <AppTitle title={'OPDMedicine Dashboard'} />
+            <div className="flex flex-align-center" style={{
+                gap: "10px",
+                paddingTop: '3px'
+            }}>
+                <AppTitle title={'OPDMedicine Dashboard'} />
+                <Link to='/OPDMedicine/Create'>
+                    <button className="btn btn-primary">Add new OPDMedicine</button>
+                </Link>
+            </div>
             {
                 state.opdmedicines != null && state.opdmedicines.length > 0
                     ?
@@ -44,6 +72,7 @@ const OPDMedicine = () => {
                                         <th key={index}>{pascalCase(property)}</th>
                                     ))
                                 }
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +84,16 @@ const OPDMedicine = () => {
                                                 <td key={index}>{opdmedicine[property]}</td>
                                             ))
                                         }
+                                        {/*
+                                        <td>
+                                            <Link to={`/OPDMedicine/Edit/${opdmedicine.opdBillingID}`} state={opdmedicine}>
+                                                <button className="btn btn-warning">Edit</button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <button className="btn btn-danger" onClick={() => deleteOPDMedicine(opdmedicine)}>Delete</button>
+                                        </td>
+                                    */}
                                     </tr>
                                 ))
                             }
