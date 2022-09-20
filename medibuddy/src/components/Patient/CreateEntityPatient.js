@@ -25,7 +25,7 @@ const CreateEntityPatient = (props) => {
             email : existing_patient ?  existing_patient.email : "",
             address : existing_patient ? existing_patient.address : "",
             gender : existing_patient ? existing_patient.gender : "",
-            DOB : existing_patient ? existing_patient.dob : formatDate(new Date()),
+            dob : existing_patient ? formatDate(new Date(existing_patient.dob)) : formatDate(new Date()),
         },
         validationErrors: [],
         creating: false,
