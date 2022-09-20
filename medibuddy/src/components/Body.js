@@ -53,9 +53,8 @@ const Body = () => {
                     :
                     null
             }
-            <div className='flex flex-column flex-align-start' style={{
+            <div className='body-right flex flex-column flex-align-start' style={{
                 gap: '20px',
-                overflow: 'auto'
             }}>
                 <Routes>
 

@@ -27,10 +27,13 @@
 }
 
 .body {
-  height: calc(100% - 70px);
+  height: calc(100% - 270px);
   gap: 5px;
 }
-
+.body-right{
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .data {
   overflow-y: hidden;
   height: 100%;
