@@ -9,14 +9,14 @@ const Footer = () => <footer className="page-footer font-small blue pt-4">
             </div>
             <hr className="clearfix w-100 d-md-none pb-0" />
             <div className="col-md-3 mb-md-0 mb-3">
-                <h5>Made with ❤️</h5>
-                <h7>Team MediBuddy</h7>
+                <h3>Made with ❤️</h3>
+                <p>Team MediBuddy</p>
             </div>      
         </div>
     </div>
 
     <div className="footer-copyright text-center py-3">
-        <h7 className="text-uppercase">© 2022 Copyright MediBuddy</h7>
+        <h4 className="text-uppercase">© 2022 Copyright MediBuddy</h4>
     </div>
 
 </footer>
