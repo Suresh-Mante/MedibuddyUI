@@ -17,7 +17,7 @@ const CreateEntity = (props) => {
         OPDPatient: {
             pid: existing_OPDPatient ? existing_OPDPatient.pid : 0,
             docId: existing_OPDPatient ? existing_OPDPatient.docId : 0,
-            visitDate: existing_OPDPatient ? existing_OPDPatient.visitDate : formatDate(new Date()),
+            visitDate: existing_OPDPatient ? formatDate(new Date(existing_OPDPatient.visitDate)) : formatDate(new Date()),
             opdBillingID: existing_OPDPatient ? existing_OPDPatient.opdBillingID : 0,
         },
         patients: null,
