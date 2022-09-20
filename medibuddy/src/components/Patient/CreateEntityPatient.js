@@ -75,7 +75,7 @@ const CreateEntityPatient = (props) => {
                             email :"",
                             address: "",
                             gender : "",
-                            DOB : new Date(),
+                            DOB : formatDate(new Date()),
                         },
                     creating: false,
                     messages: [`patient ${existing_patient ? 'updated' : 'created'} successfully...`]
