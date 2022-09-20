@@ -23,8 +23,8 @@ const App = () => {
     }}>
       <div className='App flex flex-column pos-relative' id='App'>
         <Header />
-        <Body/>
-        <Footer/>
+        <Body />
+        <Footer />
       </div>
     </AppContext.Provider>
   );
