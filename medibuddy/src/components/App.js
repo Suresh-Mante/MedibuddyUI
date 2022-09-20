@@ -4,7 +4,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../css/style.css';
 import '../css/media-queries.css';
 import Body from './Body';
-
+import Footer from './Footer';
 export const AppContext = React.createContext();
 
 const App = () => {
@@ -24,6 +24,7 @@ const App = () => {
       <div className='App flex flex-column pos-relative' id='App'>
         <Header />
         <Body/>
+        <Footer/>
       </div>
     </AppContext.Provider>
   );
