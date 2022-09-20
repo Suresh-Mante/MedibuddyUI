@@ -45,6 +45,7 @@
   height: 100%;
   border-right: 1px solid var(--very-light-grey);
   background-color: var(--very-light-grey);
+  z-index: 200;
 }
 
 .left-navigation-menu {
@@ -575,4 +576,9 @@ th {
 
 .dashboard-grid .item .title{
   font-size: 20px;
+}
+
+.page-footer{
+  border-top: 1px solid var(--very-light-grey);
+  background-color: var(--very-light-grey);
 }
