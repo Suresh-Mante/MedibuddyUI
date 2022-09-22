@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import patientLogo from '../images/patient.png';
+import doctorLogo from '../images/doctor.png';
+import nurseLogo from '../images/nurse.png';
+import departmentLogo from '../images/department.png';
+import wardLogo from '../images/ward.png';
+import roomLogo from '../images/room.png';
+import testLogo from '../images/test.png';
+import medicineLogo from '../images/medicine.png';
+import billingLogo from '../images/billing.png';
+import dashboardLogo from '../images/dashboard.png';
 
 const Menu = () => {
 
@@ -64,10 +74,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Dashboard')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Dashboard' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={dashboardLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Dashboard' : null}
                     </li>
                 </Link>
@@ -76,10 +83,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Patient')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Patient' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={patientLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Patient' : null}
                     </li>
                 </Link>
@@ -88,10 +92,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Department')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Department' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={departmentLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Department' : null}
                     </li>
                 </Link>
@@ -100,10 +101,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Doctor')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Doctor' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={doctorLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Doctor' : null}
                     </li>
                 </Link>
@@ -112,10 +110,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Ward')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Ward' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={wardLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Ward' : null}
                     </li>
                 </Link>
@@ -124,10 +119,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Room')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Room' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={roomLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Room' : null}
                     </li>
                 </Link>
@@ -136,10 +128,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/OPDPatient')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/OPDPatient' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={patientLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'OPDPatient' : null}
                     </li>
                 </Link>
@@ -148,23 +137,17 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Nurse')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Nurse' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={nurseLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Nurse' : null}
                     </li>
                 </Link>
-                
+
                 {/* OPDBilling */}
                 <Link to='/OPDBilling' className='non-decor-link' id='home-link'
                     onClick={() => updateActiveTab('/OPDBilling')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/OPDBilling' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={billingLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'OPDBilling' : null}
                     </li>
                 </Link>
@@ -173,10 +156,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/OPDTest')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/OPDTest' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={testLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'OPDTest' : null}
                     </li>
                 </Link>
@@ -185,10 +165,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Test')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Test' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={testLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Test' : null}
                     </li>
                 </Link>
@@ -197,10 +174,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/Medicine')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/Medicine' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={medicineLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'Medicine' : null}
                     </li>
                 </Link>
@@ -209,10 +183,7 @@ const Menu = () => {
                     onClick={() => updateActiveTab('/OPDMedicine')}>
                     <li className={`one-line-text  flex ${state.activeTab == '/OPDMedicine' ?
                         'active' : ''}`}>
-                        <svg viewBox="0 0 24 24" className='icon' width='24px' height='24px'
-                            style={{ marginRight: '5px' }}>
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                                fill='currentColor'></path></svg>
+                        <img className='icon' src={medicineLogo} style={{ marginRight: '5px' }}></img>
                         {state.isWidthFull ? 'OPDMedicine' : null}
                     </li>
                 </Link>
