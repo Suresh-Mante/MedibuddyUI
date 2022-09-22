@@ -42,8 +42,8 @@ const OPDPatient = () => {
                 for (let OPDPatient of OPDPatients) {
                     let patient = await getPatient(OPDPatient.pid);
                     let doctor = await getDoctor(OPDPatient.docId);
-                    OPDPatient['Patient Name'] = `${patient.firstName} ${patient.midName} ${patient.lastName}`;
-                    OPDPatient['Doctor Name'] = doctor.name;
+                    OPDPatient['patient Name'] = `${patient.firstName} ${patient.midName} ${patient.lastName}`;
+                    OPDPatient['doctor Name'] = doctor.name;
                 }
                 //update state with new OPDPatients
                 setState({

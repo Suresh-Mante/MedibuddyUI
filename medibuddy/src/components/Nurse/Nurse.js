@@ -5,10 +5,16 @@ import { pascalCase } from "../Utils";
 import { getDataFromServer } from '../DataAccess';
 import { Link, Route, Routes } from "react-router-dom";
 import CreateEntityNurse from "./CreateEntityNurse";
+import Search from "../Shared/Search";
+import Loading from '../Shared/Loading';
 
 const Nurse = () => {
     const [state, setState] = useState({
-        nurses: null
+        nurses: null,
+        filters: {
+            searchBy: null,
+            searchText: ''
+        }
     });
     const getNurses = async () => {
         //use NurseAPI.Get
@@ -28,7 +34,7 @@ const Nurse = () => {
             //no internet connection/connection refused
         }
     }
-    const deletenurse = async(deleted_nurse) => {
+    const deletenurse = async (deleted_nurse) => {
         //use NurseAPI.Delete
         const response = await getDataFromServer(`${NURSE_API}/?id=${deleted_nurse.id}`, 'DELETE');
         if (response) {
@@ -44,6 +50,22 @@ const Nurse = () => {
             }
         } else {
         }
+    }
+    const updateTableByFilters = (searchBy, searchText) => {
+        setState({
+            ...state,
+            filters: {
+                searchBy: searchBy,
+                searchText: searchText
+            }
+        });
+    }
+    const getTable = () => {
+        if (state.filters.searchBy != null) {
+            return state.nurses.filter((nurse) => nurse[state.filters.searchBy]
+                .toString().toLowerCase().includes(state.filters.searchText.toLowerCase()));
+        }
+        else return state.nurses;
     }
     useEffect(() => {
         if (state.nurses == null) {
@@ -64,41 +86,47 @@ const Nurse = () => {
             {
                 state.nurses != null && state.nurses.length > 0
                     ?
-                    <table className="table table-bordered table-striped">
-                        <thead>
-                            <tr>
+                    <>
+                        <Search dataSource={Object.keys(state.nurses[0])} filterTable={updateTableByFilters} />
+                        <table className="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    {
+                                        Object.keys(state.nurses[0]).map((property, index) => (
+                                            <th key={index}>{pascalCase(property)}</th>
+                                        ))
+                                    }
+                                    <th colSpan={2}>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {
-                                    Object.keys(state.nurses[0]).map((property, index) => (
-                                        <th key={index}>{pascalCase(property)}</th>
+                                    getTable().map((nurse, index) => (
+                                        <tr key={index}>
+                                            {
+                                                Object.keys(nurse).map((property, index) => (
+                                                    <td key={index}>{nurse[property]}</td>
+                                                ))
+                                            }
+                                            <td>
+                                                <Link to={`/Nurse/Edit/${nurse.id}`} state={nurse}>
+                                                    <button className="btn btn-warning">Edit</button>
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <button className="btn btn-danger" onClick={() => deletenurse(nurse)}>Delete</button>
+                                            </td>
+                                        </tr>
                                     ))
                                 }
-                                <th colSpan={2}>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                state.nurses.map((nurse, index) => (
-                                    <tr key={index}>
-                                        {
-                                            Object.keys(nurse).map((property, index) => (
-                                                <td key={index}>{nurse[property]}</td>
-                                            ))
-                                        }
-                                        <td>
-                                            <Link to={`/Nurse/Edit/${nurse.id}`} state={nurse}>
-                                                <button className="btn btn-warning">Edit</button>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <button className="btn btn-danger" onClick={() => deletenurse(nurse)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </>
                     :
-                    <div>No Nurse records</div>
+                    <div className="flex flex-align-center" style={{ gap: '10px' }}>
+                        Fetching data...
+                        <Loading />
+                    </div>
             }
         </>
     );

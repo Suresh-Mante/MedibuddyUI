@@ -5,10 +5,16 @@ import { pascalCase } from "../Utils";
 import { getDataFromServer } from '../DataAccess';
 import { Link, Route, Routes } from "react-router-dom";
 import CreateEntityPatient from "./CreateEntityPatient";
+import Loading from "../Shared/Loading";
+import Search from "../Shared/Search";
 
 const Patient = () => {
     const [state, setState] = useState({
-        patients: null
+        patients: null,
+        filters: {
+            searchBy: null,
+            searchText: ''
+        }
     });
     const getPatients = async () => {
         //use PatientAPI.Get
@@ -28,7 +34,7 @@ const Patient = () => {
             //no internet connection/connection refused
         }
     }
-    const deletePatient = async(deleted_patient) => {
+    const deletePatient = async (deleted_patient) => {
         //use PatientAPI.Delete
         const response = await getDataFromServer(`${PATIENT_API}/?pid=${deleted_patient.pid}`, 'DELETE');
         if (response) {
@@ -45,6 +51,22 @@ const Patient = () => {
             }
         } else {
         }
+    }
+    const updateTableByFilters = (searchBy, searchText) => {
+        setState({
+            ...state,
+            filters: {
+                searchBy: searchBy,
+                searchText: searchText
+            }
+        });
+    }
+    const getTable = () => {
+        if (state.filters.searchBy != null) {
+            return state.patients.filter((patient) => patient[state.filters.searchBy]
+                .toString().toLowerCase().includes(state.filters.searchText.toLowerCase()));
+        }
+        else return state.patients;
     }
     useEffect(() => {
         if (state.patients == null) {
@@ -65,41 +87,47 @@ const Patient = () => {
             {
                 state.patients != null && state.patients.length > 0
                     ?
-                    <table className="table table-bordered table-striped">
-                        <thead>
-                            <tr>
+                    <>
+                        <Search dataSource={Object.keys(state.patients[0])} filterTable={updateTableByFilters} />
+                        <table className="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    {
+                                        Object.keys(state.patients[0]).map((property, index) => (
+                                            <th key={index}>{pascalCase(property)}</th>
+                                        ))
+                                    }
+                                    <th colSpan={2}>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {
-                                    Object.keys(state.patients[0]).map((property, index) => (
-                                        <th key={index}>{pascalCase(property)}</th>
+                                    getTable().map((patient, index) => (
+                                        <tr key={index}>
+                                            {
+                                                Object.keys(patient).map((property, index) => (
+                                                    <td key={index}>{patient[property]}</td>
+                                                ))
+                                            }
+                                            <td>
+                                                <Link to={`/Patient/Edit/${patient.pid}`} state={patient}>
+                                                    <button className="btn btn-warning">Edit</button>
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <button className="btn btn-danger" onClick={() => deletePatient(patient)}>Delete</button>
+                                            </td>
+                                        </tr>
                                     ))
                                 }
-                                <th colSpan={2}>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                state.patients.map((patient, index) => (
-                                    <tr key={index}>
-                                        {
-                                            Object.keys(patient).map((property, index) => (
-                                                <td key={index}>{patient[property]}</td>
-                                            ))
-                                        }
-                                        <td>
-                                            <Link to={`/Patient/Edit/${patient.pid}`} state={patient}>
-                                                <button className="btn btn-warning">Edit</button>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <button className="btn btn-danger" onClick={() => deletePatient(patient)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </>
                     :
-                    <div>No Patient records</div>
+                    <div className="flex flex-align-center" style={{ gap: '10px' }}>
+                        Fetching data...
+                        <Loading />
+                    </div>
             }
         </>
     );

@@ -3,13 +3,18 @@ import { TEST_API } from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
 import {getDataFromServer} from  '../DataAccess';
-
 import { Link, Route, Routes } from "react-router-dom";
 import CreateEntityTest from "./CreateEntityTest";
+import Search from "../Shared/Search";
+import Loading from '../Shared/Loading';
 
 const Test = () => {
     const [state, setState] = useState({
-        tests: null
+        tests: null,
+        filters: {
+            searchBy: null,
+            searchText: ''
+        }
     });
     const getTests = async () => {
         //use TESTAPI.Get
@@ -47,7 +52,22 @@ const Test = () => {
         } else {
         }
     }
-
+    const updateTableByFilters = (searchBy, searchText) => {
+        setState({
+            ...state,
+            filters: {
+                searchBy: searchBy,
+                searchText: searchText
+            }
+        });
+    }
+    const getTable = () => {
+        if (state.filters.searchBy != null) {
+            return state.tests.filter((test) => test[state.filters.searchBy]
+                .toString().toLowerCase().includes(state.filters.searchText.toLowerCase()));
+        }
+        else return state.tests;
+    }
     useEffect(() => {
         if (state.tests == null) {
             getTests();
@@ -67,6 +87,8 @@ const Test = () => {
             {
                 state.tests != null && state.tests.length > 0
                     ?
+                    <>
+                        <Search dataSource={Object.keys(state.tests[0])} filterTable={updateTableByFilters} />
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -80,7 +102,7 @@ const Test = () => {
                         </thead>
                         <tbody>
                             {
-                                state.tests.map((test, index) => (
+                                 getTable().map((test, index) => (
                                     <tr key={index}>
                                         {
                                             Object.keys(test).map((property, index) => (
@@ -100,8 +122,12 @@ const Test = () => {
                             }
                         </tbody>
                     </table>
+                    </>
                     :
-                    <div>No Test records</div>
+                    <div className="flex flex-align-center" style={{ gap: '10px' }}>
+                        Fetching data...
+                        <Loading />
+                    </div>
             }
         </>
     );

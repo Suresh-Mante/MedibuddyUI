@@ -5,10 +5,16 @@ import { pascalCase } from "../Utils";
 import { getDataFromServer } from '../DataAccess';
 import { Link, Route, Routes } from "react-router-dom";
 import CreateEntityOPDTest from "./CreateEntityOPDTest.js"
+import Search from "../Shared/Search";
+import Loading from '../Shared/Loading';
 
 const OPDTest = () => {
     const [state, setState] = useState({
-        opdtests: null
+        opdtests: null,
+        filters: {
+            searchBy: null,
+            searchText: ''
+        }
     });
     const getOPDTests = async () => {
         //use OPDTestAPI.Get
@@ -28,7 +34,7 @@ const OPDTest = () => {
             //no internet connection/connection refused
         }
     }
-    const deleteOPDTest = async(deleted_opdtest) => {
+    const deleteOPDTest = async (deleted_opdtest) => {
         //use OPDTestAPI.Delete
         const response = await getDataFromServer(`${OPDTest_API}/?opdBillingID=${deleted_opdtest.OPDBillingID}`, 'DELETE');
         if (response) {
@@ -44,6 +50,22 @@ const OPDTest = () => {
             }
         } else {
         }
+    }
+    const updateTableByFilters = (searchBy, searchText) => {
+        setState({
+            ...state,
+            filters: {
+                searchBy: searchBy,
+                searchText: searchText
+            }
+        });
+    }
+    const getTable = () => {
+        if (state.filters.searchBy != null) {
+            return state.opdtests.filter((opdtest) => opdtest[state.filters.searchBy]
+                .toString().toLowerCase().includes(state.filters.searchText.toLowerCase()));
+        }
+        else return state.opdtests;
     }
     useEffect(() => {
         if (state.opdtests == null) {
@@ -64,27 +86,29 @@ const OPDTest = () => {
             {
                 state.opdtests != null && state.opdtests.length > 0
                     ?
-                    <table className="table table-bordered table-striped">
-                        <thead>
-                            <tr>
+                    <>
+                        <Search dataSource={Object.keys(state.opdtests[0])} filterTable={updateTableByFilters} />
+                        <table className="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    {
+                                        Object.keys(state.opdtests[0]).map((property, index) => (
+                                            <th key={index}>{pascalCase(property)}</th>
+                                        ))
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {
-                                    Object.keys(state.opdtests[0]).map((property, index) => (
-                                        <th key={index}>{pascalCase(property)}</th>
-                                    ))
-                                }
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                state.opdtests.map((opdtest, index) => (
-                                    <tr key={index}>
-                                        {
-                                            Object.keys(opdtest).map((property, index) => (
-                                                <td key={index}>{opdtest[property]}</td>
-                                            ))
-                                        }
-                                        {/*
+                                    getTable().map((opdtest, index) => (
+                                        <tr key={index}>
+                                            {
+                                                Object.keys(opdtest).map((property, index) => (
+                                                    <td key={index}>{opdtest[property]}</td>
+                                                ))
+                                            }
+                                            {/*
                                         <td>
                                             <Link to={`/OPDTest/Edit/${opdtest.opdBillingID}`} state={opdtest}>
                                                 <button className="btn btn-warning">Edit</button>
@@ -94,13 +118,17 @@ const OPDTest = () => {
                                             <button className="btn btn-danger" onClick={() => deleteOPDTest(opdtest)}>Delete</button>
                                         </td>
                                     */}
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                    </>
                     :
-                    <div>No OPDTest records</div>
+                    <div className="flex flex-align-center" style={{ gap: '10px' }}>
+                        Fetching data...
+                        <Loading />
+                    </div>
             }
         </>
     );

@@ -4,10 +4,16 @@ import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
 import { getDataFromServer } from '../DataAccess';
 import { Link, Route, Routes } from "react-router-dom";
+import Search from "../Shared/Search";
+import Loading from '../Shared/Loading';
 
 const Room = () => {
     const [state, setState] = useState({
-        rooms: null
+        rooms: null,
+        filters: {
+            searchBy: null,
+            searchText: ''
+        }
     });
     const getRooms = async () => {
         //use RoomAPI.Get
@@ -44,6 +50,22 @@ const Room = () => {
         } else {
         }
     }
+    const updateTableByFilters = (searchBy, searchText) => {
+        setState({
+            ...state,
+            filters: {
+                searchBy: searchBy,
+                searchText: searchText
+            }
+        });
+    }
+    const getTable = () => {
+        if (state.filters.searchBy != null) {
+            return state.rooms.filter((room) => room[state.filters.searchBy]
+                .toString().toLowerCase().includes(state.filters.searchText.toLowerCase()));
+        }
+        else return state.rooms;
+    }
     useEffect(() => {
         if (state.rooms == null) {
             getRooms();
@@ -63,6 +85,8 @@ const Room = () => {
             {
                 state.rooms != null && state.rooms.length > 0
                     ?
+                    <>
+                        <Search dataSource={Object.keys(state.rooms[0])} filterTable={updateTableByFilters} />
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -76,7 +100,7 @@ const Room = () => {
                         </thead>
                         <tbody>
                             {
-                                state.rooms.map((room, index) => (
+                                getTable().map((room, index) => (
                                     <tr key={index}>
                                         {
                                             Object.keys(room).map((property, index) => (
@@ -96,8 +120,12 @@ const Room = () => {
                             }
                         </tbody>
                     </table>
+                    </>
                     :
-                    <div>No room records</div>
+                    <div className="flex flex-align-center" style={{ gap: '10px' }}>
+                        Fetching data...
+                        <Loading />
+                    </div>
             }
         </>
     );
