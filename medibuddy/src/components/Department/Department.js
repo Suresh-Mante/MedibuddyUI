@@ -5,10 +5,16 @@ import { pascalCase } from "../Utils";
 import { getDataFromServer } from '../DataAccess';
 import { Link, Route, Routes } from "react-router-dom";
 import CreateEntityDepartment from "./CreateEntityDepartment";
+import Search from "../Shared/Search";
+import Loading from "../Shared/Loading";
 
 const Department = () => {
     const [state, setState] = useState({
-        departments: null
+        departments: null,
+        filters: {
+            searchBy: null,
+            searchText: ''
+        }
     });
     const getDepartments = async () => {
         //use DepartmentAPI.Get
@@ -28,7 +34,7 @@ const Department = () => {
             //no internet connection/connection refused
         }
     }
-    const deleteDepartment = async(deleted_department) => {
+    const deleteDepartment = async (deleted_department) => {
         //use DepartmentAPI.Delete
         const response = await getDataFromServer(`${Department_API}/?depID=${deleted_department.depID}`, 'DELETE');
         if (response) {
@@ -45,6 +51,22 @@ const Department = () => {
             }
         } else {
         }
+    }
+    const updateTableByFilters = (searchBy, searchText) => {
+        setState({
+            ...state,
+            filters: {
+                searchBy: searchBy,
+                searchText: searchText
+            }
+        });
+    }
+    const getTable = () => {
+        if (state.filters.searchBy != null) {
+            return state.departments.filter((department) => department[state.filters.searchBy]
+                .toString().toLowerCase().includes(state.filters.searchText.toLowerCase()));
+        }
+        else return state.departments;
     }
     useEffect(() => {
         if (state.departments == null) {
@@ -65,41 +87,47 @@ const Department = () => {
             {
                 state.departments != null && state.departments.length > 0
                     ?
-                    <table className="table table-bordered table-striped">
-                        <thead>
-                            <tr>
+                    <>
+                        <Search dataSource={Object.keys(state.departments[0])} filterTable={updateTableByFilters} />
+                        <table className="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    {
+                                        Object.keys(state.departments[0]).map((property, index) => (
+                                            <th key={index}>{pascalCase(property)}</th>
+                                        ))
+                                    }
+                                    <th colSpan={2}>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 {
-                                    Object.keys(state.departments[0]).map((property, index) => (
-                                        <th key={index}>{pascalCase(property)}</th>
+                                    getTable().map((department, index) => (
+                                        <tr key={index}>
+                                            {
+                                                Object.keys(department).map((property, index) => (
+                                                    <td key={index}>{department[property]}</td>
+                                                ))
+                                            }
+                                            <td>
+                                                <Link to={`/Department/Edit/${department.depID}`} state={department}>
+                                                    <button className="btn btn-warning">Edit</button>
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <button className="btn btn-danger" onClick={() => deleteDepartment(department)}>Delete</button>
+                                            </td>
+                                        </tr>
                                     ))
                                 }
-                                <th colSpan={2}>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                state.departments.map((department, index) => (
-                                    <tr key={index}>
-                                        {
-                                            Object.keys(department).map((property, index) => (
-                                                <td key={index}>{department[property]}</td>
-                                            ))
-                                        }
-                                        <td>
-                                            <Link to={`/Department/Edit/${department.depID}`} state={department}>
-                                                <button className="btn btn-warning">Edit</button>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <button className="btn btn-danger" onClick={() => deleteDepartment(department)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </>
                     :
-                    <div>No Department records</div>
+                    <div className="flex flex-align-center" style={{ gap: '10px' }}>
+                        Fetching data...
+                        <Loading />
+                    </div>
             }
         </>
     );

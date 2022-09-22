@@ -5,10 +5,16 @@ import { pascalCase } from "../Utils";
 import { getDataFromServer } from '../DataAccess';
 import { Link, Route, Routes } from "react-router-dom";
 import CreateEntityOPDMedicine from "./CreateEntityOPDMedicine.js"
+import Search from "../Shared/Search";
+import Loading from '../Shared/Loading';
 
 const OPDMedicine = () => {
     const [state, setState] = useState({
-        opdmedicines: null
+        opdmedicines: null,
+        filters: {
+            searchBy: null,
+            searchText: ''
+        }
     });
     const getOPDMedicines = async () => {
         //use OPDMedicineAPI.Get
@@ -45,6 +51,22 @@ const OPDMedicine = () => {
         } else {
         }
     }
+    const updateTableByFilters = (searchBy, searchText) => {
+        setState({
+            ...state,
+            filters: {
+                searchBy: searchBy,
+                searchText: searchText
+            }
+        });
+    }
+    const getTable = () => {
+        if (state.filters.searchBy != null) {
+            return state.opdmedicines.filter((opdmedicine) => opdmedicine[state.filters.searchBy]
+                .toString().toLowerCase().includes(state.filters.searchText.toLowerCase()));
+        }
+        else return state.opdmedicines;
+    }
     useEffect(() => {
         if (state.opdmedicines == null) {
             getOPDMedicines();
@@ -64,6 +86,8 @@ const OPDMedicine = () => {
             {
                 state.opdmedicines != null && state.opdmedicines.length > 0
                     ?
+                    <>
+                        <Search dataSource={Object.keys(state.opdmedicines[0])} filterTable={updateTableByFilters} />
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -77,7 +101,7 @@ const OPDMedicine = () => {
                         </thead>
                         <tbody>
                             {
-                                state.opdmedicines.map((opdmedicine, index) => (
+                                getTable().map((opdmedicine, index) => (
                                     <tr key={index}>
                                         {
                                             Object.keys(opdmedicine).map((property, index) => (
@@ -99,8 +123,12 @@ const OPDMedicine = () => {
                             }
                         </tbody>
                     </table>
+                    </>
                     :
-                    <div>No OPDMedicine records</div>
+                    <div className="flex flex-align-center" style={{ gap: '10px' }}>
+                        Fetching data...
+                        <Loading />
+                    </div>
             }
         </>
     );
