@@ -1,27 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getDataFromServer } from "../DataAccess";
-import { DOCTOR_API, MEDICINE_API, OPDBilling_API, OPDMEDICINE_API, OPDTest_API, OPD_PATIENT_API, PATIENT_API, TEST_API } from "../Env";
+import { DOCTOR_API, MEDICINE_API, IPDMEDICINE_API, IPDTest_API, IPD_PATIENT_API, PATIENT_API, TEST_API, NURSE_API, ROOM_API } from "../Env";
 import Loading from "../Shared/Loading";
+import { formatDate } from "../Utils";
 
 const Discharge = () => {
-    var OPDPatient = null;
+    var IPDPatient = null;
+    // var IPDPatient = {
+    //     "id": 3,
+    //     "pid": 1,
+    //     "docId": 1,
+    //     "nurseID": 101,
+    //     "entryDate": "2022-09-22T00:00:00",
+    //     "exitDate": null,
+    //     "roomID": 1,
+    //     "discharged": false
+    // };
     const location = useLocation();
     if (location && location.state) {
-        OPDPatient = location.state
+        IPDPatient = location.state
     }
     const [patient, setPatient] = useState(null);
     const [doctor, setDoctor] = useState(null);
+    const [room, setRoom] = useState(null);
+    const [nurse, setNurse] = useState(null);
     const [tests, setTests] = useState(null);
     const [medicines, setMedicines] = useState(null);
 
     const totalBillAmount = () => {
-        if (doctor != null && tests != null && medicines != null) {
+        if (doctor != null && tests != null && medicines != null && room != null) {
             let doctorFees = doctor.fees;
+            let roomCharges = room.rate * Math.ceil(
+                (new Date().getTime() - new Date(IPDPatient.entryDate).getTime())
+                /
+                (1000 * 3600 * 24)
+            );
             let testBill = tests.reduce((sum, curr) => sum + curr.price, 0);
             let medicineBill = medicines.reduce((sum, curr) => sum + curr.price, 0);
 
-            return doctorFees + testBill + medicineBill;
+            return doctorFees + testBill + medicineBill + roomCharges;
         } else {
             return 0;
         }
@@ -37,7 +55,7 @@ const Discharge = () => {
     }
 
     const getTests = async () => {
-        const response = await getDataFromServer(`${OPDTest_API}/${OPDPatient.opdBillingID}`, 'GET');
+        const response = await getDataFromServer(`${IPDTest_API}/${IPDPatient.id}`, 'GET');
         if (response) {
             if (response.statusCode == 200) {
                 const tests = response.records;
@@ -65,7 +83,7 @@ const Discharge = () => {
     }
 
     const getMedicines = async () => {
-        const response = await getDataFromServer(`${OPDMEDICINE_API}/${OPDPatient.opdBillingID}`, 'GET');
+        const response = await getDataFromServer(`${IPDMEDICINE_API}/${IPDPatient.id}`, 'GET');
         if (response) {
             if (response.statusCode == 200) {
                 const medicines = response.records;
@@ -84,7 +102,7 @@ const Discharge = () => {
     }, []);
 
     const getPatient = async () => {
-        const response = await getDataFromServer(`${PATIENT_API}/${OPDPatient.pid}`, 'GET');
+        const response = await getDataFromServer(`${PATIENT_API}/${IPDPatient.pid}`, 'GET');
         if (response) {
             if (response.statusCode == 200) {
                 const patient = response.record;
@@ -100,11 +118,31 @@ const Discharge = () => {
     }, []);
 
     const getDoctor = async () => {
-        const response = await getDataFromServer(`${DOCTOR_API}/${OPDPatient.docId}`, 'GET');
+        const response = await getDataFromServer(`${DOCTOR_API}/${IPDPatient.docId}`, 'GET');
         if (response) {
             if (response.statusCode == 200) {
                 const doctor = response.record;
                 setDoctor(doctor);
+            } else { }
+        } else { }
+    }
+
+    const getNurse = async () => {
+        const response = await getDataFromServer(`${NURSE_API}/${IPDPatient.nurseID}`, 'GET');
+        if (response) {
+            if (response.statusCode == 200) {
+                const nurse = response.record;
+                setNurse(nurse);
+            } else { }
+        } else { }
+    }
+
+    const getRoom = async () => {
+        const response = await getDataFromServer(`${ROOM_API}/${IPDPatient.roomID}`, 'GET');
+        if (response) {
+            if (response.statusCode == 200) {
+                const room = response.record;
+                setRoom(room);
             } else { }
         } else { }
     }
@@ -115,18 +153,30 @@ const Discharge = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (nurse == null) {
+            getNurse();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (room == null) {
+            getRoom();
+        }
+    }, []);
+
     const DischargePatient = async () => {
-        const response = await getDataFromServer(`${OPD_PATIENT_API}/Discharge/${OPDPatient.id}`, 'POST');
+        const response = await getDataFromServer(`${IPD_PATIENT_API}/Discharge/${IPDPatient.id}`, 'POST');
         if (response) {
             if (response.statusCode == 200) {
-                window.location.href = '/OPDPatient';
+                window.location.href = '/IPDPatient';
             } else { }
         } else { }
     }
     return (
         <>
             <div className="flex flex-align-center">
-                <Link to={'/OPDPatient'}>
+                <Link to={'/IPDPatient'}>
                     <svg viewBox="0 0 24 24" className='icon circle-bg' width='24px' height='24px'
                         style={{ marginRight: '5px' }}>
                         <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
@@ -150,6 +200,7 @@ const Discharge = () => {
                                         <td>Name</td>
                                         <td>Mobile</td>
                                         <td>Email</td>
+                                        <td>Admission Date</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -157,6 +208,7 @@ const Discharge = () => {
                                         <td>{`${patient.firstName} ${patient.midName} ${patient.lastName}`}</td>
                                         <td>{patient.mobile}</td>
                                         <td>{patient.email}</td>
+                                        <td>{formatDate(new Date(IPDPatient.entryDate))}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -182,6 +234,62 @@ const Discharge = () => {
                                         <td>{doctor.mobile}</td>
                                         <td>{doctor.email}</td>
                                         <td>₹{doctor.fees}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            : <Loading />
+                    }
+                </div>
+                <div className="form-group">
+                    <div style={{ fontSize: '20px' }}>Nurse Details</div>
+                    {
+                        nurse ?
+                            <table className="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>Mobile</td>
+                                        <td>Email</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{nurse.name}</td>
+                                        <td>{nurse.mobile}</td>
+                                        <td>{nurse.email}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            : <Loading />
+                    }
+                </div>
+                <div className="form-group">
+                    <div style={{ fontSize: '20px' }}>Room Details</div>
+                    {
+                        room ?
+                            <table className="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td>Rate</td>
+                                        <td>Ward Id</td>
+                                        <td>No of days</td>
+                                        <td>Room Charges</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{room.type}</td>
+                                        <td>₹{room.rate}</td>
+                                        <td>{room.wardId}</td>
+                                        <td>{Math.ceil(
+                                            (new Date().getTime() - new Date(IPDPatient.entryDate).getTime())
+                                            /
+                                            (1000 * 3600 * 24))}</td>
+                                        <td>₹{room.rate * Math.ceil(
+                                            (new Date().getTime() - new Date(IPDPatient.entryDate).getTime())
+                                            /
+                                            (1000 * 3600 * 24))}</td>
                                     </tr>
                                 </tbody>
                             </table>
