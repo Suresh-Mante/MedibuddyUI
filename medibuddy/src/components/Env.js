@@ -26,3 +26,8 @@ export const ROOM_API = BASE_API + 'room';
 export const OPD_PATIENT_API = BASE_API + 'opdpatient';
 export const OPDBilling_API = BASE_API + 'opdbilling';
 export const Department_API = BASE_API + 'department';
+
+//IPD
+export const IPD_PATIENT_API = BASE_API + 'ipdpatient';
+export const IPDMEDICINE_API = BASE_API + 'ipdmedicine';
+export const IPDTest_API = BASE_API + 'ipdtest';
