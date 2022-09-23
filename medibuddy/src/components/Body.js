@@ -26,6 +26,7 @@ import CreateEntityDepartment from './Department/CreateEntityDepartment';
 import CreateEntityOPDBilling from './OPDBilling/CreateEntityOPDBilling';
 import CreateEntityMedicine from './Medicine/CreateEntityMedicine';
 import Discharge from './OPDPatient/Discharge';
+import IPDDischarge from './IPDPatient/Discharge';
 import CreateEntityOPDTest from './OPDTest/CreateEntityOPDTest';
 import CreateEntityOPDMedicine from './OPDMedicine/CreateEntityOPDMedicine';
 import IPDPatient from './IPDPatient/IPDPatient';
@@ -104,10 +105,11 @@ const Body = () => {
                     <Route path="/OPDTest/Create" element={<CreateEntityOPDTest />} />
                     <Route path="/OPDTest/Edit/:id" element={<CreateEntityOPDTest editing={true} />} />
 
+
                     <Route path="/IPDPatient" element={<IPDPatient />} />
-                   
-                    
-                    
+                    <Route path="/IPDPatient/Discharge/:id" element={<IPDDischarge />} />
+
+
                 </Routes>
             </div>
         </div>
