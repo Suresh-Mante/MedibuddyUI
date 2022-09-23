@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { DOCTOR_API, OPD_PATIENT_API, PATIENT_API } from "../Env";
+import { DOCTOR_API, IPD_PATIENT_API, PATIENT_API, NURSE_API,ROOM_API} from "../Env";
 import AppTitle from "../Header/AppTitle";
 import { pascalCase } from "../Utils";
 import Loading from '../Shared/Loading';
@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 import Search from "../Shared/Search";
 
 
-const OPDPatient = () => {
+const IPDPatient = () => {
     const [state, setState] = useState({
-        OPDPatients: null,
+        IPDPatients: null,
         filters: {
             searchBy: null,
             searchText: ''
@@ -33,22 +33,42 @@ const OPDPatient = () => {
             } else { return null }
         } else { return null }
     }
-    const getOPDPatients = async () => {
-        //use OPDPatientAPI.Get
-        const response = await getDataFromServer(OPD_PATIENT_API, 'GET');
+    const getNurse = async (id) => {
+        const response = await getDataFromServer(`${NURSE_API}/${id}`, 'GET');
         if (response) {
             if (response.statusCode == 200) {
-                const OPDPatients = response.records;
-                for (let OPDPatient of OPDPatients) {
-                    let patient = await getPatient(OPDPatient.pid);
-                    let doctor = await getDoctor(OPDPatient.docId);
-                    OPDPatient['patient Name'] = `${patient.firstName} ${patient.midName} ${patient.lastName}`;
-                    OPDPatient['doctor Name'] = doctor.name;
+                return response.record;
+            } else { return null }
+        } else { return null }
+    }
+    const getRoom = async (id) => {
+        const response = await getDataFromServer(`${ROOM_API}/${id}`, 'GET');
+        if (response) {
+            if (response.statusCode == 200) {
+                return response.record;
+            } else { return null }
+        } else { return null }
+    }
+    const getIPDPatients = async () => {
+        //use IPDPatientAPI.Get
+        const response = await getDataFromServer(IPD_PATIENT_API, 'GET');
+        if (response) {
+            if (response.statusCode == 200) {
+                const IPDPatients = response.records;
+                for (let IPDPatient of IPDPatients) {
+                    let patient = await getPatient(IPDPatient.pid);
+                    let doctor = await getDoctor(IPDPatient.docId);
+                    let nurse = await getNurse(IPDPatient.nurseID);
+                    let room = await getRoom(IPDPatient.roomID);
+                    IPDPatient['patient Name'] = `${patient.firstName} ${patient.midName} ${patient.lastName}`;
+                    IPDPatient['doctor Name'] = doctor.name;
+                    IPDPatient['nurse Name'] = nurse.name;
+                    IPDPatient['room Name'] = room.type;
                 }
-                //update state with new OPDPatients
+                //update state with new IPDPatients
                 setState({
                     ...state,
-                    OPDPatients: OPDPatients
+                    IPDPatients: IPDPatients
                 })
             } else {
                 //handle 404/400/500 errors here
@@ -57,16 +77,16 @@ const OPDPatient = () => {
             //no internet connection/connection refused
         }
     }
-    const deleteOPDPatient = async (deleted_OPDPatient) => {
-        //use OPDPatientAPI.Delete
-        const response = await getDataFromServer(`${OPD_PATIENT_API}/?id=${deleted_OPDPatient.id}`, 'DELETE');
+    const deleteIPDPatient = async (deleted_IPDPatient) => {
+        //use IPDPatientAPI.Delete
+        const response = await getDataFromServer(`${IPD_PATIENT_API}/?id=${deleted_IPDPatient.id}`, 'DELETE');
         if (response) {
             if (response.statusCode == 200) {
-                const deleted_OPDPatient = response.record;
+                const deleted_IPDPatient = response.record;
                 setState({
                     ...state,
-                    OPDPatients: state.OPDPatients.filter((OPDPatient) => {
-                        return OPDPatient.id != deleted_OPDPatient.id
+                    IPDPatients: state.IPDPatients.filter((IPDPatient) => {
+                        return IPDPatient.id != deleted_IPDPatient.id
                     })
                 })
             } else {
@@ -85,14 +105,14 @@ const OPDPatient = () => {
     }
     const getTable = () => {
         if (state.filters.searchBy != null) {
-            return state.OPDPatients.filter((OPDPatient) => OPDPatient[state.filters.searchBy]
+            return state.IPDPatients.filter((IPDPatient) => IPDPatient[state.filters.searchBy]
                 .toString().toLowerCase().includes(state.filters.searchText.toLowerCase()));
         }
-        else return state.OPDPatients;
+        else return state.IPDPatients;
     }
     useEffect(() => {
-        if (state.OPDPatients == null) {
-            getOPDPatients();
+        if (state.IPDPatients == null) {
+            getIPDPatients();
         }
     }, []);
     return (
@@ -101,21 +121,21 @@ const OPDPatient = () => {
                 gap: "10px",
                 paddingTop: '3px'
             }}>
-                <AppTitle title={'OPDPatient Dashboard'} />
-                <Link to='/OPDPatient/Create'>
-                    <button className="btn btn-primary">Add new OPDPatient</button>
+                <AppTitle title={'IPDPatient Dashboard'} />
+                <Link to='/IPDPatient/Create'>
+                    <button className="btn btn-primary">Add new IPDPatient</button>
                 </Link>
             </div>
             {
-                state.OPDPatients != null && state.OPDPatients.length > 0
+                state.IPDPatients != null && state.IPDPatients.length > 0
                     ?
                     <>
-                        <Search dataSource={Object.keys(state.OPDPatients[0])} filterTable={updateTableByFilters} />
+                        <Search dataSource={Object.keys(state.IPDPatients[0])} filterTable={updateTableByFilters} />
                         <table className="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     {
-                                        Object.keys(state.OPDPatients[0]).map((property, index) => (
+                                        Object.keys(state.IPDPatients[0]).map((property, index) => (
                                             <th key={index}>{pascalCase(property)}</th>
                                         ))
                                     }
@@ -124,25 +144,25 @@ const OPDPatient = () => {
                             </thead>
                             <tbody>
                                 {
-                                    getTable().map((OPDPatient, index) => (
+                                    getTable().map((IPDPatient, index) => (
                                         <tr key={index}>
                                             {
-                                                Object.keys(OPDPatient).map((property, index) => (
-                                                    <td key={index}>{OPDPatient[property].toString()}</td>
+                                                Object.keys(IPDPatient).map((property, index) => (
+                                                    <td key={index}>{IPDPatient[property].toString()}</td>
                                                 ))
                                             }
                                             <td>
-                                                <Link to={`/OPDPatient/Edit/${OPDPatient.id}`} state={OPDPatient}>
+                                                <Link to={`/IPDPatient/Edit/${IPDPatient.id}`} state={IPDPatient}>
                                                     <button className="btn btn-warning">Edit</button>
                                                 </Link>
                                             </td>
                                             <td>
-                                                <button className="btn btn-danger" onClick={() => deleteOPDPatient(OPDPatient)}>Delete</button>
+                                                <button className="btn btn-danger" onClick={() => deleteIPDPatient(IPDPatient)}>Delete</button>
                                             </td>
                                             {
-                                                !OPDPatient.discharged ?
+                                                !IPDPatient.discharged ?
                                                     <td>
-                                                        <Link to={`/OPDPatient/Discharge/${OPDPatient.id}`} state={OPDPatient}>
+                                                        <Link to={`/IPDPatient/Discharge/${IPDPatient.id}`} state={IPDPatient}>
                                                             <button className="btn btn-success">Discharge</button>
                                                         </Link>
                                                     </td>
@@ -166,4 +186,4 @@ const OPDPatient = () => {
     );
 }
 
-export default OPDPatient;
+export default IPDPatient;

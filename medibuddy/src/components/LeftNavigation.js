@@ -132,6 +132,15 @@ const Menu = () => {
                         {state.isWidthFull ? 'OPDPatient' : null}
                     </li>
                 </Link>
+                 {/* IPDPatient */}
+                 <Link to='/IPDPatient' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/IPDPatient')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/IPDPatient' ?
+                        'active' : ''}`}>
+                        <img className='icon' src={patientLogo} style={{ marginRight: '5px' }}></img>
+                        {state.isWidthFull ? 'IPDPatient' : null}
+                    </li>
+                </Link>
                 {/* Nurse */}
                 <Link to='/Nurse' className='non-decor-link' id='home-link'
                     onClick={() => updateActiveTab('/Nurse')}>

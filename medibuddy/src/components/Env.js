@@ -31,3 +31,4 @@ export const Department_API = BASE_API + 'department';
 export const IPD_PATIENT_API = BASE_API + 'ipdpatient';
 export const IPDMEDICINE_API = BASE_API + 'ipdmedicine';
 export const IPDTest_API = BASE_API + 'ipdtest';
+
