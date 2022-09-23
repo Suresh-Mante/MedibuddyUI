@@ -196,6 +196,15 @@ const Menu = () => {
                         {state.isWidthFull ? 'OPDMedicine' : null}
                     </li>
                 </Link>
+                {/*IPDMedicine*/}
+                <Link to='/IPDMedicine' className='non-decor-link' id='home-link'
+                    onClick={() => updateActiveTab('/IPDMedicine')}>
+                    <li className={`one-line-text  flex ${state.activeTab == '/IPDMedicine' ?
+                        'active' : ''}`}>
+                        <img className='icon' src={medicineLogo} style={{ marginRight: '5px' }}></img>
+                        {state.isWidthFull ? 'IPDMedicine' : null}
+                    </li>
+                </Link>
             </ul>
         </div>
     );

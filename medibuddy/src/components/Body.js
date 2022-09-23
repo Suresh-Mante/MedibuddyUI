@@ -29,7 +29,9 @@ import Discharge from './OPDPatient/Discharge';
 import IPDDischarge from './IPDPatient/Discharge';
 import CreateEntityOPDTest from './OPDTest/CreateEntityOPDTest';
 import CreateEntityOPDMedicine from './OPDMedicine/CreateEntityOPDMedicine';
+import CreateEntityIPDMedicine from './IPDMedicine/CreateEntityIPDMedicine';
 import IPDPatient from './IPDPatient/IPDPatient';
+import IPDMedicine from './IPDMedicine/IPDMedicine';
 
 const Body = () => {
     const appContext = useContext(AppContext);
@@ -62,6 +64,7 @@ const Body = () => {
 
                     <Route path='/Medicine' element={<Medicine />} />
                     <Route path='/OPDMedicine' element={<OPDMedicine />} />
+                    <Route path='/IPDMedicine' element={<IPDMedicine />} />
                     <Route path='/Test' element={<Test />} />
                     <Route path="/Test/Create" element={<CreateEntityTest />} />
                     <Route path="/Test/Edit/:id" element={<CreateEntityTest editing={true} />} />
@@ -89,6 +92,8 @@ const Body = () => {
                     <Route path="/OPDBilling/Edit/:id" element={<CreateEntityOPDBilling editing={true} />} />
 
                     <Route path="/OPDMedicine/Create" element={<CreateEntityOPDMedicine />} />
+                    <Route path="/IPDMedicine/Create" element={<CreateEntityIPDMedicine />} />
+                                    
 
 
                     <Route path="/Doctor/Create" element={<CreateEntityDoctor />} />
