@@ -14,6 +14,7 @@ import Room from './Room/Room';
 import CreateEntity from './Ward/CreateEntity';
 import CreateRoom from './Room/CreateEntity';
 import CreateOPDPatient from './OPDPatient/CreateEntity';
+import CreateIPDPatient from './IPDPatient/CreateEntity';
 import Ward from './Ward/Ward';
 import Test from './Test/Test';
 import Medicine from './Medicine/Medicine';
@@ -107,6 +108,8 @@ const Body = () => {
 
 
                     <Route path="/IPDPatient" element={<IPDPatient />} />
+                    <Route path="/IPDPatient/Create" element={<CreateIPDPatient />} />
+                    <Route path="/IPDPatient/Edit/:id" element={<CreateIPDPatient editing={true} />} />
                     <Route path="/IPDPatient/Discharge/:id" element={<IPDDischarge />} />
 
 
