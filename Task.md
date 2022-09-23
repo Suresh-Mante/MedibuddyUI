@@ -26,3 +26,13 @@
   - Discharge functionality
 - Ajay
   - Db table creation
+
+# 23Sep
+- Suresh
+  - IPD discharge
+- Soudip
+  - IPD create entity
+- Ajay 
+  - IPD patient
+- Ravi
+  - IPD Medicine
