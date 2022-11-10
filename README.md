@@ -1,5 +1,9 @@
 # MedibuddyUI
 
+This project is aimed at achieving the frontend portion of an extended **Hospital Management System**. This uses React JS, HTML, CSS, Javascript and Bootstrap for interactive UI (frontend), ASP.NET for creating APIs (backend) (C# as programming language) and SQL Server for creating and maintaining databases.
+
+You can find the backend portion of this project [here](https://github.com/Suresh-Mante/Medibuddy)
+
 Here are some screenshots of the rendered project on browser 
 
 
